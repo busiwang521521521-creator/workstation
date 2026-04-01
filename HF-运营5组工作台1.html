@@ -1307,9 +1307,9 @@ async function syncAll(){
   if(changed){ localStorage.setItem('bl_yandex',JSON.stringify(yxData)); }
 })();
 
-document.getElementById('sum-date').value=today();
-document.getElementById('e-date').value=today();
-document.getElementById('f-start').value=today();
+const _sd=document.getElementById('sum-date'); if(_sd) _sd.value=today();
+const _ed=document.getElementById('e-date'); if(_ed) _ed.value=today();
+const _fs=document.getElementById('f-start'); if(_fs) _fs.value=today();
 renderKanban();
 loadDailyKanban();
 
