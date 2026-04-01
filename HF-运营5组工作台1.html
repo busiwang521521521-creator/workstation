@@ -497,18 +497,30 @@ tbody tr:hover td{background:rgba(255,255,255,.02)}
 
 <script>
 const APPS=[
-  {code:'JHA-062',name:'瑞升-推特成人版'},{code:'JHA-155',name:'瑞升-老司鸡'},
-  {code:'JHA-055',name:'涩漫天堂'},{code:'JHA-158',name:'樱花色漫'},
-  {code:'YC-151',name:'天美传媒'},{code:'YC-139',name:'91AV'},
-  {code:'HX-030',name:'魅影'},{code:'HX-044',name:'潮汐映画'},
-  {code:'HX-048',name:'18禁漫'},{code:'HX-031',name:'淫君子'},
-  {code:'HX-034',name:'51吃瓜'},{code:'JHG-057',name:'老色批'},
-  {code:'JHG-051',name:'顶通H漫'},{code:'JHG-055',name:'瓜瓜社'},
-  {code:'DX-098',name:'懂色帝'},{code:'JHA-077',name:'瑞XV'},
-  {code:'DX-028',name:'麻豆传媒web'},{code:'DX-058',name:'不良少女 抖音2025'},
-  {code:'DX-077',name:'小红书'},{code:'DX-083',name:'xvideo中文版'},
-  {code:'TJ-032',name:'抖瓜网'},{code:'TJ-029',name:'小黄书'},
-  {code:'TJ-058',name:'911吃瓜网'},{code:'TJ-091',name:'911大事件'},
+  {code:'TJ-091',name:'911大事件'},
+  {code:'TJ-058',name:'911吃瓜网'},
+  {code:'JHA-062',name:'推特成人版'},
+  {code:'TJ-029',name:'小黄书'},
+  {code:'TJ-032',name:'抖瓜网'},
+  {code:'DX-083',name:'xvideo中文版'},
+  {code:'DX-077',name:'小红书'},
+  {code:'DX-058',name:'不良少女'},
+  {code:'DX-028',name:'麻豆传媒web'},
+  {code:'JHA-077',name:'瑞XV'},
+  {code:'JHA-155',name:'老司鸡'},
+  {code:'JHA-055',name:'涩漫天堂'},
+  {code:'JHA-158',name:'樱花色漫'},
+  {code:'YC-151',name:'天美传媒'},
+  {code:'YC-139',name:'91AV'},
+  {code:'HX-030',name:'魅影'},
+  {code:'HX-044',name:'潮汐映画'},
+  {code:'HX-048',name:'18禁漫'},
+  {code:'HX-031',name:'淫君子'},
+  {code:'HX-034',name:'51吃瓜'},
+  {code:'JHG-057',name:'老色批'},
+  {code:'JHG-051',name:'顶通H漫'},
+  {code:'JHG-055',name:'恒香-瓜瓜社'},
+  {code:'DX-098',name:'悦达-懂色帝'},
 ];
 const OPERATORS=['潘昊','浦东','李易飞','段良军','王云赫','刘文鹏','欧阳子瑜','王云熙'];
 const BCOLS=['b-amber','b-purple','b-blue','b-green','b-pink','b-red','b-blue','b-green'];
@@ -999,69 +1011,79 @@ async function syncAll(){
   _syncing = true;
   setSyncStatus('⏳ 同步中...', 'sync-loading');
   try {
-    const ym = currentYm();
+    const now2 = new Date();
+    const ym = now2.toISOString().slice(0,7);
+    const prevDate = new Date(now2.getFullYear(), now2.getMonth()-1, 1);
+    const ymPrev = prevDate.toISOString().slice(0,7);
 
-    // 1. 日活数据
-    const dauRes = await gsFetch('dau', ym);
-    if(dauRes.data){
-      // merge: Google Sheets优先
-      Object.assign(dauData, dauRes.data);
-      // 如果返回了apps列表，更新APPS（可选，保持原APPS不变）
-      safeLS('set','bl_dau', JSON.stringify(dauData));
+    async function fetchTwo(type){
+      const [r1, r2] = await Promise.all([gsFetch(type, ym), gsFetch(type, ymPrev)]);
+      return {cur:r1, prev:r2};
     }
 
-    // 2. Yandex数据
-    const yxRes = await gsFetch('yandex', ym);
-    if(yxRes.data){
-      Object.assign(yxData, yxRes.data);
-      safeLS('set','bl_yandex', JSON.stringify(yxData));
-    }
+    // 1. 日活数据（本月+上月）
+    const {cur:dauCur, prev:dauPrev} = await fetchTwo('dau');
+    if(dauCur.data) Object.assign(dauData, dauCur.data);
+    if(dauPrev.data) Object.assign(dauData, dauPrev.data);
+    safeLS('set','bl_dau', JSON.stringify(dauData));
 
-    // 3. 收款记录
-    const entRes = await gsFetch('entries', ym);
-    if(entRes.data && entRes.data.length > 0){
-      // 合并：以Google Sheets为准（同月数据替换）
-      const otherMonths = entries.filter(e => !e.start || !e.start.startsWith(ym));
-      const gsEntries = entRes.data.map((r,i) => ({
-        id: 'gs_' + r.date + '_' + i,
-        start: r.date, client: r.client, type: r.type,
-        product: r.product, rmb: r.rmb, end: r.end||'',
-        operator: r.operator, station: r.station||''
-      }));
-      entries = [...otherMonths, ...gsEntries];
+    // 2. Yandex数据（本月+上月）
+    const {cur:yxCur, prev:yxPrev} = await fetchTwo('yandex');
+    if(yxCur.data) Object.assign(yxData, yxCur.data);
+    if(yxPrev.data) Object.assign(yxData, yxPrev.data);
+    safeLS('set','bl_yandex', JSON.stringify(yxData));
+
+    // 3. 收款记录（本月+上月）
+    const {cur:entCur, prev:entPrev} = await fetchTwo('entries');
+    const gsEntries = [];
+    [entCur, entPrev].forEach(res => {
+      if(res.data && res.data.length > 0){
+        res.data.forEach((r,i) => gsEntries.push({
+          id:'gs_'+r.date+'_'+i, start:r.date, client:r.client,
+          type:r.type, product:r.product, rmb:r.rmb,
+          end:r.end||'', operator:r.operator, station:r.station||''
+        }));
+      }
+    });
+    if(gsEntries.length > 0){
+      const other = entries.filter(e => e.start && !e.start.startsWith(ym) && !e.start.startsWith(ymPrev));
+      entries = [...other, ...gsEntries];
       safeLS('set','bl_entries', JSON.stringify(entries));
     }
 
-    // 4. 运营开支
-    const expRes = await gsFetch('expense', ym);
-    if(expRes.data && expRes.data.length > 0){
-      const otherMonths = expenses.filter(e => !e.date || !e.date.startsWith(ym));
-      const gsExp = expRes.data.map((r,i) => ({
-        id: 'gs_' + r.date + '_' + i,
-        date: r.date, cat: r.cat, amount: r.amount,
-        usdt: r.usdt, note: r.note
-      }));
-      expenses = [...otherMonths, ...gsExp];
+    // 4. 运营开支（本月+上月）
+    const {cur:expCur, prev:expPrev} = await fetchTwo('expense');
+    const gsExp = [];
+    [expCur, expPrev].forEach(res => {
+      if(res.data && res.data.length > 0){
+        res.data.forEach((r,i) => gsExp.push({
+          id:'gs_'+r.date+'_'+i, date:r.date, cat:r.cat,
+          amount:r.amount, usdt:r.usdt, note:r.note
+        }));
+      }
+    });
+    if(gsExp.length > 0){
+      const other = expenses.filter(e => e.date && !e.date.startsWith(ym) && !e.date.startsWith(ymPrev));
+      expenses = [...other, ...gsExp];
       safeLS('set','bl_expenses', JSON.stringify(expenses));
     }
 
-    // 刷新所有页面数据
+    // 刷新所有视图
     renderKanban();
     renderEntryTable();
     loadDailyKanban();
-    renderKanbanCharts();
-    // 如果当前在日活/yandex页面也刷新
+    try{ renderKanbanCharts(); }catch(e){}
     const dauPage = document.getElementById('page-dau');
     if(dauPage && dauPage.classList.contains('active')) initDauPage();
     const yxPage = document.getElementById('page-yandex');
     if(yxPage && yxPage.classList.contains('active')) initYxPage();
 
-    const now = new Date();
-    const timeStr = now.getHours().toString().padStart(2,'0') + ':' + now.getMinutes().toString().padStart(2,'0');
-    setSyncStatus('✓ 已同步 ' + timeStr, 'sync-ok');
+    const t = new Date();
+    const timeStr = t.getHours().toString().padStart(2,'0')+':'+t.getMinutes().toString().padStart(2,'0');
+    setSyncStatus('✓ 已同步 '+timeStr, 'sync-ok');
   } catch(err) {
     console.error('同步失败:', err);
-    setSyncStatus('✗ 同步失败: ' + err.message.slice(0,20), 'sync-err');
+    setSyncStatus('✗ 失败: '+err.message.slice(0,25), 'sync-err');
   }
   _syncing = false;
 }
