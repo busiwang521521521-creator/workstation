@@ -527,6 +527,28 @@ const APPS=[
 ];
 const OPERATORS=['潘昊','浦东','李易飞','段良军','王云赫','刘文鹏','欧阳子瑜','王云熙'];
 const BCOLS=['b-amber','b-purple','b-blue','b-green','b-pink','b-red','b-blue','b-green'];
+function normDate(s){
+  if(!s) return '';
+  s = String(s).trim();
+  // Already formatted: 2026-03-01
+  if(s.match(/^\d{4}-\d{2}-\d{2}$/)) return s;
+  // Try parsing as Date object string
+  const d = new Date(s);
+  if(!isNaN(d.getTime())){
+    return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
+  }
+  // 2026/3/1 or 3/1
+  if(s.match(/^\d{4}\/\d{1,2}\/\d{1,2}$/)){
+    const p=s.split('/');
+    return p[0]+'-'+p[1].padStart(2,'0')+'-'+p[2].padStart(2,'0');
+  }
+  if(s.match(/^\d{1,2}\/\d{1,2}$/)){
+    const p=s.split('/');
+    const y=new Date().getFullYear();
+    return y+'-'+p[0].padStart(2,'0')+'-'+p[1].padStart(2,'0');
+  }
+  return s;
+}
 var _entryChart1=null,_entryChart2=null;
 
 function _ls(k,def){try{return JSON.parse(localStorage.getItem(k)||def);}catch(e){return JSON.parse(def);}}
@@ -1176,14 +1198,25 @@ function gsFetch(type, ym){
     window[cbName] = (data)=>{
       cleanup();
       if(!data.ok){ reject(new Error(data.error||'API error')); return; }
-      // Filter by ym client-side
-      if(ym && data.data){
+      // Normalize dates and filter by ym client-side
+      if(data.data){
         if(Array.isArray(data.data)){
-          data.data = data.data.filter(r=>r.date && r.date.startsWith(ym));
+          // Fix date fields in array records
+          data.data = data.data.map(r=>{
+            if(r.date) r.date = normDate(r.date);
+            if(r.end) r.end = normDate(r.end);
+            if(r.start) r.start = normDate(r.start);
+            return r;
+          });
+          if(ym) data.data = data.data.filter(r=>r.date && r.date.startsWith(ym));
         } else {
-          const filtered={};
-          Object.keys(data.data).forEach(d=>{ if(d.startsWith(ym)) filtered[d]=data.data[d]; });
-          data.data = filtered;
+          // Fix date keys in object
+          const fixed={};
+          Object.keys(data.data).forEach(d=>{
+            const nd=normDate(d);
+            if(!ym || nd.startsWith(ym)) fixed[nd]=data.data[d];
+          });
+          data.data = fixed;
         }
       }
       resolve(data);
@@ -1211,58 +1244,39 @@ async function syncAll(){
   try {
     const now2 = new Date();
     const ym = now2.getFullYear()+'-'+String(now2.getMonth()+1).padStart(2,'0');
-    const prevDate = new Date(now2.getFullYear(), now2.getMonth()-1, 1);
-    const ymPrev = prevDate.getFullYear()+'-'+String(prevDate.getMonth()+1).padStart(2,'0');
 
-    async function fetchTwo(type){
-      const [r1, r2] = await Promise.all([gsFetch(type, ym), gsFetch(type, ymPrev)]);
-      return {cur:r1, prev:r2};
+    // 1. 日活数据 - 完全替换
+    const dauRes = await gsFetch('dau');
+    if(dauRes.data){
+      dauData = dauRes.data;
+      safeLS('set','bl_dau', JSON.stringify(dauData));
     }
 
-    // 1. 日活数据（本月+上月）
-    const {cur:dauCur, prev:dauPrev} = await fetchTwo('dau');
-    if(dauCur.data) Object.assign(dauData, dauCur.data);
-    if(dauPrev.data) Object.assign(dauData, dauPrev.data);
-    safeLS('set','bl_dau', JSON.stringify(dauData));
+    // 2. Yandex数据 - 完全替换
+    const yxRes = await gsFetch('yandex');
+    if(yxRes.data){
+      yxData = yxRes.data;
+      safeLS('set','bl_yandex', JSON.stringify(yxData));
+    }
 
-    // 2. Yandex数据（本月+上月）
-    const {cur:yxCur, prev:yxPrev} = await fetchTwo('yandex');
-    if(yxCur.data) Object.assign(yxData, yxCur.data);
-    if(yxPrev.data) Object.assign(yxData, yxPrev.data);
-    safeLS('set','bl_yandex', JSON.stringify(yxData));
-
-    // 3. 收款记录（本月+上月）
-    const {cur:entCur, prev:entPrev} = await fetchTwo('entries');
-    const gsEntries = [];
-    [entCur, entPrev].forEach(res => {
-      if(res.data && res.data.length > 0){
-        res.data.forEach((r,i) => gsEntries.push({
-          id:'gs_'+r.date+'_'+i, start:r.date, client:r.client,
-          type:r.type, product:r.product, rmb:r.rmb,
-          end:r.end||'', operator:r.operator, station:r.station||''
-        }));
-      }
-    });
-    if(gsEntries.length > 0){
-      const other = entries.filter(e => e.start && !e.start.startsWith(ym) && !e.start.startsWith(ymPrev));
-      entries = [...other, ...gsEntries];
+    // 3. 收款记录 - 完全替换
+    const entRes = await gsFetch('entries');
+    if(entRes.data){
+      entries = entRes.data.map((r,i) => ({
+        id:'gs_'+r.date+'_'+i, start:r.date, client:r.client,
+        type:r.type, product:r.product, rmb:r.rmb,
+        end:r.end||'', operator:r.operator, station:r.station||''
+      }));
       safeLS('set','bl_entries', JSON.stringify(entries));
     }
 
-    // 4. 运营开支（本月+上月）
-    const {cur:expCur, prev:expPrev} = await fetchTwo('expense');
-    const gsExp = [];
-    [expCur, expPrev].forEach(res => {
-      if(res.data && res.data.length > 0){
-        res.data.forEach((r,i) => gsExp.push({
-          id:'gs_'+r.date+'_'+i, date:r.date, cat:r.cat,
-          amount:r.amount, usdt:r.usdt, note:r.note
-        }));
-      }
-    });
-    if(gsExp.length > 0){
-      const other = expenses.filter(e => e.date && !e.date.startsWith(ym) && !e.date.startsWith(ymPrev));
-      expenses = [...other, ...gsExp];
+    // 4. 运营开支 - 完全替换
+    const expRes = await gsFetch('expense');
+    if(expRes.data){
+      expenses = expRes.data.map((r,i) => ({
+        id:'gs_'+r.date+'_'+i, date:r.date, cat:r.cat,
+        amount:r.amount, usdt:r.usdt, note:r.note
+      }));
       safeLS('set','bl_expenses', JSON.stringify(expenses));
     }
 
