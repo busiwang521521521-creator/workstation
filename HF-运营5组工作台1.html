@@ -145,8 +145,15 @@ tbody tr:hover td{background:rgba(255,255,255,.02)}
 
     <!-- 月度看板 -->
     <div class="page active" id="page-kanban">
-      <div class="page-title">月度看板</div>
-      <div class="page-sub" id="kanban-month-label">当月数据概览</div>
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:3px">
+        <div class="page-title">月度看板</div>
+        <div style="display:flex;align-items:center;gap:8px">
+          <button class="btn btn-sm" style="background:rgba(255,255,255,.05);border:1px solid var(--border2);color:var(--text2)" onclick="shiftKanbanMonth(-1)">◀ 上月</button>
+          <span id="kanban-month-label" style="font-size:13px;color:var(--text2);min-width:80px;text-align:center">当月</span>
+          <button class="btn btn-sm" style="background:rgba(255,255,255,.05);border:1px solid var(--border2);color:var(--text2)" onclick="shiftKanbanMonth(1)">下月 ▶</button>
+        </div>
+      </div>
+      <div class="page-sub" style="margin-bottom:20px">点击切换查看历史月份数据</div>
 
       <!-- 收款 -->
       <div class="metrics m4">
@@ -587,35 +594,70 @@ function renderBar(elId,labels,vals,c1,c2){
 }
 
 // ── Kanban ─────────────────────────────────────────
+let _kanbanYm = null;
+function getKanbanYm(){
+  if(!_kanbanYm){ const n=new Date(); _kanbanYm=n.getFullYear()+'-'+String(n.getMonth()+1).padStart(2,'0'); }
+  return _kanbanYm;
+}
+function shiftKanbanMonth(dir){
+  const [y,m]=getKanbanYm().split('-').map(Number);
+  const nd=new Date(y,m-1+dir,1);
+  _kanbanYm=nd.getFullYear()+'-'+String(nd.getMonth()+1).padStart(2,'0');
+  renderKanban();
+  // 如果切换到新月份需要从表格拉取数据
+  syncMonthIfNeeded(_kanbanYm);
+}
+async function syncMonthIfNeeded(ym){
+  // 检查是否已有该月数据
+  const hasDau=Object.keys(dauData).some(d=>d.startsWith(ym));
+  if(!hasDau){
+    setSyncStatus('⏳ 加载'+ym+'...','sync-loading');
+    try{
+      const [dr,yr,er,xr]=await Promise.all([gsFetch('dau',ym),gsFetch('yandex',ym),gsFetch('entries',ym),gsFetch('expense',ym)]);
+      if(dr.data) Object.assign(dauData,dr.data);
+      if(yr.data) Object.assign(yxData,yr.data);
+      if(er.data&&er.data.length){
+        const other=entries.filter(e=>e.start&&!e.start.startsWith(ym));
+        entries=[...other,...er.data.map((r,i)=>({id:'gs_'+r.date+'_'+i,start:r.date,client:r.client,type:r.type,product:r.product,rmb:r.rmb,end:r.end||'',operator:r.operator,station:r.station||''}))];
+      }
+      if(xr.data&&xr.data.length){
+        const other=expenses.filter(e=>e.date&&!e.date.startsWith(ym));
+        expenses=[...other,...xr.data.map((r,i)=>({id:'gs_'+r.date+'_'+i,date:r.date,cat:r.cat,amount:r.amount,usdt:r.usdt,note:r.note}))];
+      }
+      safeLS('set','bl_dau',JSON.stringify(dauData));
+      safeLS('set','bl_yandex',JSON.stringify(yxData));
+      const t=new Date();
+      setSyncStatus('✓ 已同步 '+t.getHours().toString().padStart(2,'0')+':'+t.getMinutes().toString().padStart(2,'0'),'sync-ok');
+      renderKanban();
+    }catch(e){ setSyncStatus('✗ 加载失败','sync-err'); }
+  }
+}
 function renderKanban(){
-  const now=new Date(),ym=now.toISOString().slice(0,7);
-  document.getElementById('kanban-month-label').textContent=`${now.getFullYear()} 年 ${now.getMonth()+1} 月`;
+  const ym=getKanbanYm();
+  const [y,m]=ym.split('-').map(Number);
+  document.getElementById('kanban-month-label').textContent=`${y} 年 ${m} 月`;
   const month=entries.filter(e=>e.start&&e.start.startsWith(ym));
   const ws=weekStart();
   const weekEntries=entries.filter(e=>e.start&&e.start>=ws&&e.start<=today());
   const totalRmb=month.reduce((s,e)=>s+e.rmb,0);
   const weekRmb=weekEntries.reduce((s,e)=>s+e.rmb,0);
   const totalExp=expenses.filter(ex=>ex.date&&ex.date.startsWith(ym)).reduce((s,ex)=>s+ex.amount,0);
-  // 本月补量消耗
-  const blMonth=buliangList.filter(b=>b.start&&b.start.startsWith(ym)).reduce((s,b)=>s+b.total,0);
   document.getElementById('m-week-rmb').textContent=fmt(weekRmb);
   document.getElementById('m-rmb').textContent=fmt(totalRmb);
   document.getElementById('m-profit').textContent=fmt(totalRmb-totalExp);
   document.getElementById('m-exp').textContent=fmt(totalExp);
 
-  // 本月 APP 日活总计
+  // 当月 APP 日活总计
   const allDays=Object.keys(dauData).filter(d=>d.startsWith(ym));
   const monthDau=allDays.reduce((s,d)=>s+APPS.reduce((ss,a)=>ss+(dauData[d][a.code]||0),0),0);
-  // 本月 Yandex 总计
+  // 当月 Yandex 总计
   const allYxDays=Object.keys(yxData).filter(d=>d.startsWith(ym));
   const monthYx=allYxDays.reduce((s,d)=>s+OPERATORS.reduce((ss,op)=>ss+(yxData[d][op+'_dau']||yxData[d][op]||0),0),0);
   // 上个月
-  const lastNow=new Date(now.getFullYear(),now.getMonth()-1,1);
-  const lastYm=lastNow.toISOString().slice(0,7);
-  const lastDauDays=Object.keys(dauData).filter(d=>d.startsWith(lastYm));
-  const lastDau=lastDauDays.reduce((s,d)=>s+APPS.reduce((ss,a)=>ss+(dauData[d][a.code]||0),0),0);
-  const lastYxDays=Object.keys(yxData).filter(d=>d.startsWith(lastYm));
-  const lastYx=lastYxDays.reduce((s,d)=>s+OPERATORS.reduce((ss,op)=>ss+(yxData[d][op+'_dau']||yxData[d][op]||0),0),0);
+  const lastD=new Date(y,m-2,1);
+  const lastYm=lastD.getFullYear()+'-'+String(lastD.getMonth()+1).padStart(2,'0');
+  const lastDau=Object.keys(dauData).filter(d=>d.startsWith(lastYm)).reduce((s,d)=>s+APPS.reduce((ss,a)=>ss+(dauData[d][a.code]||0),0),0);
+  const lastYx=Object.keys(yxData).filter(d=>d.startsWith(lastYm)).reduce((s,d)=>s+OPERATORS.reduce((ss,op)=>ss+(yxData[d][op+'_dau']||yxData[d][op]||0),0),0);
 
   const monthAll=monthDau+monthYx;
   const lastAll=lastDau+lastYx;
