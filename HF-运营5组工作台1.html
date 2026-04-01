@@ -525,7 +525,7 @@ const APPS=[
   {code:'JHG-055',name:'恒香-瓜瓜社'},
   {code:'DX-098',name:'悦达-懂色帝'},
 ];
-const OPERATORS=['潘浩','浦东','李易飞','段良军','王云赫','刘文鹏','欧阳子瑜','王云熙'];
+const OPERATORS=['潘昊','浦东','李易飞','段良军','王云赫','刘文鹏','欧阳子瑜','王云熙'];
 const BCOLS=['b-amber','b-purple','b-blue','b-green','b-pink','b-red','b-blue','b-green'];
 var _entryChart1=null,_entryChart2=null;
 
@@ -1402,7 +1402,7 @@ function initEntryPage(){
   sel.innerHTML=months.map((m,i)=>`<option value="${m}"${i===0?' selected':''}>${m}</option>`).join('');
   const pf=document.getElementById('entry-person-filter');
   if(pf){
-    const ops=['潘浩','浦东','李易飞','段良军','王云赫','刘文鹏','欧阳子瑜','王云熙'];
+    const ops=['潘昊','浦东','李易飞','段良军','王云赫','刘文鹏','欧阳子瑜','王云熙'];
     pf.innerHTML='<option value="">全部人员</option>'+ops.map(o=>`<option value="${o}">${o}</option>`).join('');
   }
   setTimeout(renderEntryStats, 50);
