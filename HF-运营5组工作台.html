@@ -1,0 +1,1525 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>恒丰二部-运行5组-组长浦洺</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet"/>
+<style>
+:root{--bg:#0e0f13;--surface:#16181f;--surface2:#1e2029;--border:rgba(255,255,255,0.07);--border2:rgba(255,255,255,0.13);--text:#e8e9ef;--text2:#8b8fa8;--text3:#555a72;--accent:#4ade80;--accent2:#22d3ee;--amber:#fbbf24;--red:#f87171;--purple:#a78bfa;--pink:#f472b6;--font:'Noto Sans SC',sans-serif;--mono:'DM Mono',monospace;--r:10px;--r2:6px}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--font);background:var(--bg);color:var(--text);min-height:100vh;font-size:14px}
+.shell{display:flex;height:100vh;overflow:hidden}
+.sidebar{width:215px;min-width:215px;background:var(--surface);border-right:1px solid var(--border);display:flex;flex-direction:column;padding:18px 12px;overflow-y:auto}
+.logo{padding:0 8px 18px;border-bottom:1px solid var(--border);margin-bottom:14px}
+.logo-main{font-size:13px;font-weight:500;color:var(--text);line-height:1.5}
+.logo-sub{font-size:12px;color:var(--accent);margin-top:3px}
+.nav-group{font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:.08em;padding:0 8px;margin:10px 0 4px}
+.nav-item{display:flex;align-items:center;gap:9px;padding:8px 10px;border-radius:var(--r2);cursor:pointer;color:var(--text2);font-size:13px;transition:all .15s;margin-bottom:1px;border:1px solid transparent}
+.nav-item:hover{background:var(--surface2);color:var(--text)}
+.nav-item.active{background:rgba(74,222,128,.08);color:var(--accent);border-color:rgba(74,222,128,.15)}
+.nav-icon{width:16px;height:16px;flex-shrink:0}
+.main{flex:1;overflow-y:auto;background:var(--bg)}
+.page{display:none;padding:24px 28px;animation:fadeIn .2s ease}
+.page.active{display:block}
+@keyframes fadeIn{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:none}}
+.page-title{font-size:19px;font-weight:500;color:var(--text);margin-bottom:3px}
+.page-sub{font-size:13px;color:var(--text2);margin-bottom:20px}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:18px;margin-bottom:14px}
+.card-title{font-size:11px;font-weight:500;color:var(--text3);text-transform:uppercase;letter-spacing:.07em;margin-bottom:14px}
+.metrics{display:grid;gap:10px;margin-bottom:14px}
+.m2{grid-template-columns:repeat(2,1fr)}.m3{grid-template-columns:repeat(3,1fr)}.m4{grid-template-columns:repeat(4,1fr)}.m5{grid-template-columns:repeat(5,1fr)}
+.metric{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:14px 16px}
+.metric-label{font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px}
+.metric-val{font-family:var(--mono);font-size:20px;font-weight:500}
+.green{color:var(--accent)}.amber{color:var(--amber)}.red{color:var(--red)}.blue{color:var(--accent2)}.purple{color:var(--purple)}
+.form-grid{display:grid;gap:12px}
+.fg3{grid-template-columns:repeat(3,1fr)}.fg4{grid-template-columns:repeat(4,1fr)}
+.fg{display:flex;flex-direction:column;gap:5px}
+.fg label{font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:.05em}
+.fg input,.fg select{background:var(--bg);border:1px solid var(--border2);border-radius:var(--r2);color:var(--text);font-size:13px;font-family:var(--font);padding:7px 10px;outline:none;transition:border-color .15s;width:100%}
+.fg input:focus,.fg select:focus{border-color:var(--accent)}
+.fg select option{background:var(--surface2)}
+.span2{grid-column:span 2}.span3{grid-column:span 3}
+.btn{display:inline-flex;align-items:center;gap:6px;padding:8px 16px;border-radius:var(--r2);font-size:13px;font-weight:500;cursor:pointer;transition:all .15s;border:none;font-family:var(--font)}
+.btn-green{background:rgba(74,222,128,.12);color:var(--accent);border:1px solid rgba(74,222,128,.2)}
+.btn-green:hover{background:rgba(74,222,128,.22)}
+.btn-blue{background:rgba(34,211,238,.1);color:var(--accent2);border:1px solid rgba(34,211,238,.2)}
+.btn-blue:hover{background:rgba(34,211,238,.18)}
+.btn-amber{background:rgba(251,191,36,.1);color:var(--amber);border:1px solid rgba(251,191,36,.2)}
+.btn-sm{padding:4px 10px;font-size:12px}
+.btn-del{background:transparent;color:var(--text3);border:1px solid var(--border)}
+.btn-del:hover{color:var(--red);border-color:rgba(248,113,113,.3)}
+.table-wrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th{font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:.05em;text-align:left;padding:7px 10px;border-bottom:1px solid var(--border);white-space:nowrap}
+td{padding:9px 10px;border-bottom:1px solid var(--border);color:var(--text);font-size:13px;white-space:nowrap}
+tr:last-child td{border-bottom:none}
+tbody tr:hover td{background:rgba(255,255,255,.02)}
+.num{font-family:var(--mono)}
+.empty-row td{color:var(--text3);text-align:center;padding:20px}
+.badge{display:inline-block;font-size:11px;padding:2px 7px;border-radius:4px;font-weight:500;white-space:nowrap}
+.b-green{background:rgba(74,222,128,.1);color:var(--accent)}
+.b-blue{background:rgba(34,211,238,.1);color:var(--accent2)}
+.b-amber{background:rgba(251,191,36,.1);color:var(--amber)}
+.b-red{background:rgba(248,113,113,.1);color:var(--red)}
+.b-purple{background:rgba(167,139,250,.1);color:var(--purple)}
+.b-pink{background:rgba(244,114,182,.1);color:var(--pink)}
+.alert{display:flex;align-items:center;justify-content:space-between;padding:11px 14px;border-radius:var(--r2);margin-bottom:7px}
+.alert-warn{background:rgba(251,191,36,.07);border:1px solid rgba(251,191,36,.2)}
+.alert-danger{background:rgba(248,113,113,.07);border:1px solid rgba(248,113,113,.2)}
+.alert-name{font-size:13px;font-weight:500}
+.alert-warn .alert-name{color:var(--amber)}.alert-danger .alert-name{color:var(--red)}
+.alert-sub{font-size:12px;color:var(--text2);margin-top:2px}
+.bar-chart{display:flex;align-items:flex-end;gap:6px}
+.bar-col{display:flex;flex-direction:column;align-items:center;gap:3px;flex:1;min-width:0}
+.bar-fill{width:100%;border-radius:3px 3px 0 0;min-height:3px}
+.bar-lbl{font-size:10px;color:var(--text3);font-family:var(--mono)}
+.bar-val{font-size:9px;color:var(--text3);font-family:var(--mono);text-align:center;max-width:100%;overflow:hidden;text-overflow:ellipsis}
+.filter-row{display:flex;align-items:center;gap:10px;margin-bottom:16px;flex-wrap:wrap}
+.filter-row input,.filter-row select{background:var(--surface);border:1px solid var(--border2);border-radius:var(--r2);color:var(--text);font-size:13px;padding:7px 10px;outline:none;font-family:var(--font)}
+.filter-row label{font-size:13px;color:var(--text2)}
+.dau-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.app-table-wrap{max-height:380px;overflow-y:auto}
+.trend-up{color:var(--accent);font-family:var(--mono);font-size:12px}
+.trend-down{color:var(--red);font-family:var(--mono);font-size:12px}
+.trend-flat{color:var(--text3);font-family:var(--mono);font-size:12px}
+.num-input{background:var(--bg);border:1px solid var(--border2);border-radius:var(--r2);color:var(--text);font-size:13px;font-family:var(--mono);padding:5px 8px;outline:none;width:100px;text-align:right}
+.num-input:focus{border-color:var(--accent)}
+.sep{border:none;border-top:1px solid var(--border);margin:14px 0}
+/* 补量看板 */
+.bl-total-row{background:rgba(251,191,36,.07);border:1px solid rgba(251,191,36,.15);border-radius:var(--r2);padding:12px 16px;display:flex;align-items:center;justify-content:space-between;margin-top:14px}
+.bl-total-label{font-size:12px;color:var(--amber)}
+.bl-total-val{font-family:var(--mono);font-size:22px;font-weight:500;color:var(--amber)}
+
+.spin{display:inline-block;animation:spin .8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.sync-ok{color:var(--accent)}.sync-err{color:var(--red)}.sync-loading{color:var(--amber)}
+</style>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+</head>
+<body>
+<div class="shell">
+  <nav class="sidebar">
+    <div class="logo">
+      <div class="logo-main">恒丰二部-运行5组</div>
+      <div class="logo-sub">组长 浦洺</div>
+      <div style="margin-top:10px;display:flex;align-items:center;gap:6px">
+        <button class="btn btn-green btn-sm" style="width:100%;justify-content:center" onclick="syncAll()">🔄 同步表格数据</button>
+      </div>
+      <div id="sync-status" style="font-size:11px;color:var(--text3);margin-top:6px;text-align:center">尚未同步</div>
+    </div>
+    <div class="nav-group">核心</div>
+    <div class="nav-item active" onclick="showPage('kanban',this)">
+      <svg class="nav-icon" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="3" width="7" height="7" rx="1.5"/><rect x="11" y="3" width="7" height="7" rx="1.5"/><rect x="2" y="11" width="7" height="7" rx="1.5"/><rect x="11" y="11" width="7" height="7" rx="1.5"/></svg>
+      月度看板
+    </div>
+    <div class="nav-item" onclick="showPage('entry',this)">
+      <svg class="nav-icon" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M10 4v12M4 10h12"/></svg>
+      每日录入
+    </div>
+    <div class="nav-item" onclick="showPage('summary',this)">
+      <svg class="nav-icon" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 10h14M3 5h14M3 15h8"/></svg>
+      每日汇总
+    </div>
+    <div class="nav-item" onclick="showPage('reminder',this)">
+      <svg class="nav-icon" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M10 2a6 6 0 016 6c0 3.5 1.5 5 1.5 5h-15S4 11.5 4 8a6 6 0 016-6zM7.5 15a2.5 2.5 0 005 0"/></svg>
+      到期提醒
+    </div>
+    <div class="nav-item" onclick="showPage('expense',this)">
+      <svg class="nav-icon" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="10" cy="10" r="7"/><path d="M10 6v8M7.5 8.5C7.5 7.4 8.6 7 10 7s2.5.4 2.5 1.5S11.4 10 10 10s-2.5.6-2.5 1.5S8.6 13 10 13s2.5-.4 2.5-1.5"/></svg>
+      运营开支
+    </div>
+    <div class="nav-group">统计</div>
+    <div class="nav-item" onclick="showPage('dau',this)">
+      <svg class="nav-icon" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 15l5-5 4 3 4-6 3 4"/></svg>
+      日活统计
+    </div>
+    <div class="nav-item" onclick="showPage('yandex',this)">
+      <svg class="nav-icon" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="10" cy="10" r="7"/><path d="M10 6v4l3 3"/></svg>
+      Yandex 统计
+    </div>
+  </nav>
+
+  <main class="main">
+
+    <!-- 月度看板 -->
+    <div class="page active" id="page-kanban">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:3px">
+        <div class="page-title">月度看板</div>
+        <div style="display:flex;align-items:center;gap:8px">
+          <button class="btn btn-sm" style="background:rgba(255,255,255,.05);border:1px solid var(--border2);color:var(--text2)" onclick="shiftKanbanMonth(-1)">◀ 上月</button>
+          <span id="kanban-month-label" style="font-size:13px;color:var(--text2);min-width:80px;text-align:center">当月</span>
+          <button class="btn btn-sm" style="background:rgba(255,255,255,.05);border:1px solid var(--border2);color:var(--text2)" onclick="shiftKanbanMonth(1)">下月 ▶</button>
+        </div>
+      </div>
+      <div class="page-sub" style="margin-bottom:20px">点击切换查看历史月份数据</div>
+
+      <!-- 收款 -->
+      <div class="metrics m4">
+        <div class="metric"><div class="metric-label">周总收款 RMB</div><div class="metric-val green" id="m-week-rmb">0.00</div></div>
+        <div class="metric"><div class="metric-label">月总收款 RMB</div><div class="metric-val green" id="m-rmb">0.00</div></div>
+        <div class="metric"><div class="metric-label">净利润 RMB</div><div class="metric-val amber" id="m-profit">0.00</div></div>
+        <div class="metric"><div class="metric-label">本月总开支 RMB</div><div class="metric-val red" id="m-exp">0.00</div></div>
+      </div>
+
+      <!-- 当日数据自动汇总 -->
+      <div class="metrics m3">
+        <div class="metric">
+          <div class="metric-label">当日日活 (APP＋Yandex)</div>
+          <div class="metric-val purple" id="dk-dau-total">—</div>
+          <div style="display:flex;gap:12px;margin-top:6px">
+            <span style="font-size:11px;color:var(--text3)">APP: <span id="dk-dau-app" style="color:var(--text2);font-family:var(--mono)">—</span></span>
+            <span style="font-size:11px;color:var(--text3)">Yandex: <span id="dk-dau-yx" style="color:var(--text2);font-family:var(--mono)">—</span></span>
+          </div>
+        </div>
+        <div class="metric">
+          <div class="metric-label">当日新增 (APP＋Yandex)</div>
+          <div class="metric-val blue" id="dk-new-total">—</div>
+          <div style="display:flex;gap:12px;margin-top:6px">
+            <span style="font-size:11px;color:var(--text3)">Yandex新增: <span id="dk-new-yx" style="color:var(--text2);font-family:var(--mono)">—</span></span>
+          </div>
+        </div>
+        <div class="metric">
+          <div class="metric-label">当日充值 (APP＋Yandex)</div>
+          <div class="metric-val amber" id="dk-pay-total">—</div>
+          <div style="display:flex;gap:12px;margin-top:6px">
+            <span style="font-size:11px;color:var(--text3)">Yandex充值: <span id="dk-pay-yx" style="color:var(--text2);font-family:var(--mono)">—</span></span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 日活月度 -->
+      <div class="metrics m3">
+        <div class="metric">
+          <div class="metric-label">月APP总日活</div>
+          <div class="metric-val purple" id="m-dau-month">—</div>
+          <div id="m-dau-cmp" style="font-size:12px;margin-top:5px;font-family:var(--mono)"></div>
+        </div>
+        <div class="metric">
+          <div class="metric-label">月Yandex总量</div>
+          <div class="metric-val blue" id="m-yx-month">—</div>
+          <div id="m-yx-cmp" style="font-size:12px;margin-top:5px;font-family:var(--mono)"></div>
+        </div>
+        <div class="metric">
+          <div class="metric-label">所有日活数据（APP＋Yandex）</div>
+          <div class="metric-val green" id="m-all-dau">—</div>
+          <div id="m-all-cmp" style="font-size:12px;margin-top:5px;font-family:var(--mono)"></div>
+        </div>
+      </div>
+
+      <!-- 图表区域 -->
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px">
+        <div class="card">
+          <div class="card-title">近6月收款趋势（折线图）</div>
+          <div style="position:relative;height:180px"><canvas id="chart-line"></canvas></div>
+        </div>
+        <div class="card">
+          <div class="card-title">本月收款类型分布（环形图）</div>
+          <div style="position:relative;height:180px"><canvas id="chart-doughnut"></canvas></div>
+        </div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px">
+        <div class="card">
+          <div class="card-title">近7日日活（APP vs Yandex 堆叠面积）</div>
+          <div style="position:relative;height:180px"><canvas id="chart-area"></canvas></div>
+        </div>
+        <div class="card">
+          <div class="card-title">本月开支构成（柱状图）</div>
+          <div style="position:relative;height:180px"><canvas id="chart-bar"></canvas></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 每日录入 -->
+    <div class="page" id="page-entry">
+      <div class="page-title">收款统计</div>
+      <div class="page-sub">各人员月度收款汇总与明细</div>
+
+      <!-- 月份+同步 -->
+      <div class="filter-row">
+        <label style="color:var(--text2)">查询月份</label>
+        <select id="entry-month-sel" onchange="renderEntryStats()" style="background:var(--surface);border:1px solid var(--border2);border-radius:var(--r2);color:var(--text);font-size:13px;padding:7px 12px;outline:none;font-family:var(--font)"></select>
+        <button class="btn btn-blue" onclick="syncEntryMonth()">🔄 同步数据</button>
+      </div>
+
+      <!-- 汇总指标 -->
+      <div class="metrics m4">
+        <div class="metric"><div class="metric-label">月总收款 RMB</div><div class="metric-val green" id="es-total">—</div></div>
+        <div class="metric"><div class="metric-label">总笔数</div><div class="metric-val blue" id="es-count">—</div></div>
+        <div class="metric"><div class="metric-label">参与人数</div><div class="metric-val purple" id="es-persons">—</div></div>
+        <div class="metric"><div class="metric-label">人均收款</div><div class="metric-val amber" id="es-avg">—</div></div>
+      </div>
+
+      <!-- 图表 -->
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px">
+        <div class="card">
+          <div class="card-title">各人员收款金额（柱状图）</div>
+          <div id="entry-bar-custom" style="display:flex;align-items:flex-end;gap:8px;height:200px;padding-top:20px"></div>
+        </div>
+        <div class="card">
+          <div class="card-title">各人员收款占比</div>
+          <div id="entry-pie-custom" style="display:flex;flex-direction:column;gap:8px;padding:4px 0;max-height:220px;overflow-y:auto"></div>
+        </div>
+      </div>
+
+      <!-- 人员汇总表 -->
+      <div class="card">
+        <div class="card-title">各人员收款明细汇总</div>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>开单人</th><th>笔数</th><th>收款 RMB</th><th>占比</th><th>最大单笔</th><th>平均单笔</th></tr></thead>
+            <tbody id="entry-stat-tbody"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- 全部明细 -->
+      <div class="card">
+        <div class="card-title" style="display:flex;align-items:center;justify-content:space-between">
+          <span>当月收款明细</span>
+          <select id="entry-person-filter" onchange="renderEntryDetail()" style="background:var(--bg);border:1px solid var(--border2);border-radius:var(--r2);color:var(--text);font-size:12px;padding:4px 8px;outline:none;font-family:var(--font)">
+            <option value="">全部人员</option>
+          </select>
+        </div>
+        <div class="table-wrap" style="max-height:400px;overflow-y:auto">
+          <table>
+            <thead><tr><th>收款日期</th><th>客户</th><th>类型</th><th>承接产品</th><th>合作站</th><th>RMB</th><th>开单人</th><th>结束日期</th></tr></thead>
+            <tbody id="entry-detail-tbody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- 每日汇总 -->
+    <div class="page" id="page-summary">
+      <div class="page-title">每日汇总</div>
+      <div class="page-sub">按日期查看收款汇总</div>
+      <div class="filter-row">
+        <input type="date" id="sum-date"/>
+        <button class="btn btn-green" onclick="loadSummary()">查询</button>
+      </div>
+      <!-- 周数据 -->
+      <div class="metrics m3" style="margin-bottom:8px">
+        <div class="metric"><div class="metric-label">本周收款 RMB</div><div class="metric-val green" id="s-week-rmb">—</div></div>
+        <div class="metric"><div class="metric-label">本周收款笔数</div><div class="metric-val blue" id="s-week-count">—</div></div>
+        <div class="metric"><div class="metric-label">本周补量消耗</div><div class="metric-val red" id="s-week-bl">—</div></div>
+      </div>
+      <!-- 当日数据 -->
+      <div class="metrics m3">
+        <div class="metric"><div class="metric-label">当日 RMB</div><div class="metric-val green" id="s-rmb">—</div></div>
+        <div class="metric"><div class="metric-label">当日笔数</div><div class="metric-val blue" id="s-count">—</div></div>
+        <div class="metric"><div class="metric-label">当日补量消耗</div><div class="metric-val red" id="s-bl">—</div></div>
+      </div>
+      <div class="card">
+        <div class="card-title">当日收款明细</div>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>客户</th><th>类型</th><th>合作站</th><th>承接产品</th><th>RMB</th><th>开单人</th></tr></thead>
+            <tbody id="sum-tbody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- 到期提醒 -->
+    <div class="page" id="page-reminder">
+      <div class="page-title">到期提醒</div>
+      <div class="page-sub">自动检测 7 天内到期及已逾期合约</div>
+      <div class="card">
+        <div class="card-title">警示列表</div>
+        <div id="reminder-list"><p style="color:var(--text3);font-size:13px">暂无到期记录</p></div>
+      </div>
+      <div class="card">
+        <div class="card-title">全部合约周期</div>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>客户</th><th>合作站</th><th>收款日期</th><th>结束日期</th><th>剩余天数</th><th>状态</th></tr></thead>
+            <tbody id="reminder-tbody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- 运营开支 -->
+    <div class="page" id="page-expense">
+      <div class="page-title">运营开支</div>
+      <div class="page-sub">记录商务补量、运营开支与商务退款</div>
+      <div class="card">
+        <div class="form-grid fg3">
+          <div class="fg"><label>日期</label><input id="e-date" type="date"/></div>
+          <div class="fg"><label>类别</label>
+            <select id="e-cat"><option value="">请选择</option><option>商务补量</option><option>运营开支</option><option>商务退款</option></select>
+          </div>
+          <div class="fg"><label>金额 RMB</label><input id="e-rmb" type="number" placeholder="0.00" min="0" step="0.01"/></div>
+          <div class="fg"><label>金额 USDT</label><input id="e-usdt" type="number" placeholder="0.00" min="0" step="0.01"/></div>
+          <div class="fg span2"><label>备注</label><input id="e-note" placeholder="可选备注"/></div>
+        </div>
+        <div style="margin-top:12px"><button class="btn btn-green" onclick="addExpense()">＋ 提交开支</button></div>
+      </div>
+      <div class="metrics m4">
+        <div class="metric"><div class="metric-label">商务补量</div><div class="metric-val amber" id="e-m1">0.00</div></div>
+        <div class="metric"><div class="metric-label">运营开支</div><div class="metric-val red" id="e-m2">0.00</div></div>
+        <div class="metric"><div class="metric-label">商务退款</div><div class="metric-val blue" id="e-m3">0.00</div></div>
+        <div class="metric"><div class="metric-label">总开支 RMB</div><div class="metric-val red" id="e-total">0.00</div></div>
+      </div>
+      <div class="card">
+        <div class="card-title">开支明细</div>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>日期</th><th>类别</th><th>金额 RMB</th><th>金额 USDT</th><th>备注</th><th></th></tr></thead>
+            <tbody id="expense-tbody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- 日活统计 -->
+    <div class="page" id="page-dau">
+      <div class="page-title">日活统计</div>
+      <div class="page-sub">APP 每日活跃用户录入，自动与前日对比</div>
+      <div class="filter-row">
+        <label>录入日期</label>
+        <input type="date" id="dau-date"/>
+        <button class="btn btn-green" onclick="saveDau()">保存当日数据</button>
+        <button class="btn btn-blue" onclick="loadDauQuery()">查询历史</button>
+      </div>
+      <div class="dau-grid">
+        <div class="card" style="overflow:hidden">
+          <div class="card-title">APP 日活录入</div>
+          <div class="app-table-wrap">
+            <table>
+              <thead><tr><th>编号</th><th>APP 名称</th><th>今日日活</th><th>进量</th><th>留存</th><th>充值</th><th>昨日</th><th>对比</th></tr></thead>
+              <tbody id="dau-tbody"></tbody>
+            </table>
+          </div>
+          <hr class="sep"/>
+          <div class="metrics m4" style="margin-bottom:0">
+            <div class="metric"><div class="metric-label">今日日活总计</div><div class="metric-val purple" id="dau-total-today">0</div></div>
+            <div class="metric"><div class="metric-label">昨日总计</div><div class="metric-val blue" id="dau-total-yest">0</div></div>
+            <div class="metric"><div class="metric-label">今日进量总计</div><div class="metric-val green" id="dau-total-inflow">0</div></div>
+            <div class="metric"><div class="metric-label">今日充值总计</div><div class="metric-val amber" id="dau-total-pay">0</div></div>
+          </div>
+        </div>
+        <div>
+          <div class="card">
+            <div class="card-title">近7日 APP 总日活趋势</div>
+            <div class="bar-chart" id="dau-bar" style="height:120px"></div>
+          </div>
+          <div class="card">
+            <div class="card-title">今日日活排行 TOP 5</div>
+            <div class="table-wrap">
+              <table>
+                <thead><tr><th>排名</th><th>APP</th><th>日活</th></tr></thead>
+                <tbody id="dau-rank-tbody"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- 本月日活总览 -->
+      <div class="card" style="margin-top:14px">
+        <div class="card-title" style="display:flex;align-items:center;justify-content:space-between">
+          <span>本月每日日活总览</span>
+          <select id="dau-month-select" onchange="renderDauMonthTable()" style="background:var(--bg);border:1px solid var(--border2);border-radius:var(--r2);color:var(--text);font-size:12px;padding:4px 8px;outline:none"></select>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>日期</th><th>日活总计</th><th>进量</th><th>留存</th><th>充值</th><th>环比</th></tr></thead>
+            <tbody id="dau-month-tbody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- Yandex 统计 -->
+    <div class="page" id="page-yandex">
+      <div class="page-title">Yandex 统计</div>
+      <div class="page-sub">运营人员每日数据录入与对比</div>
+      <div class="filter-row">
+        <label>录入日期</label>
+        <input type="date" id="yx-date"/>
+        <button class="btn btn-green" onclick="saveYandex()">保存当日数据</button>
+        <button class="btn btn-blue" onclick="loadYxQuery()">查询历史</button>
+      </div>
+      <div class="dau-grid">
+        <div class="card">
+          <div class="card-title">运营人员数据录入</div>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>运营</th><th>今日日活</th><th>昨日</th><th>对比</th><th>今日新增</th><th>今日充值</th></tr></thead>
+              <tbody id="yx-tbody"></tbody>
+            </table>
+          </div>
+          <hr class="sep"/>
+          <div class="metrics m4" style="margin-bottom:0">
+            <div class="metric"><div class="metric-label">今日日活总计</div><div class="metric-val green" id="yx-total-today">0</div></div>
+            <div class="metric"><div class="metric-label">昨日日活总计</div><div class="metric-val blue" id="yx-total-yest">0</div></div>
+            <div class="metric"><div class="metric-label">今日新增总计</div><div class="metric-val purple" id="yx-total-new">0</div></div>
+            <div class="metric"><div class="metric-label">今日充值总计</div><div class="metric-val amber" id="yx-total-pay">0</div></div>
+          </div>
+        </div>
+        <div>
+          <div class="card">
+            <div class="card-title">近7日 Yandex 总量趋势</div>
+            <div class="bar-chart" id="yx-bar" style="height:120px"></div>
+          </div>
+          <div class="card">
+            <div class="card-title">今日人员排行</div>
+            <div class="table-wrap">
+              <table>
+                <thead><tr><th>排名</th><th>运营</th><th>数量</th></tr></thead>
+                <tbody id="yx-rank-tbody"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- 本月Yandex日活总览 -->
+      <div class="card" style="margin-top:14px">
+        <div class="card-title" style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px">
+          <span>本月每日 Yandex 数据总览</span>
+          <div style="display:flex;align-items:center;gap:8px">
+            <select id="yx-month-select" onchange="renderYxMonthTable()" style="background:var(--bg);border:1px solid var(--border2);border-radius:var(--r2);color:var(--text);font-size:12px;padding:4px 8px;outline:none"></select>
+            <select id="yx-person-select" onchange="renderYxMonthTable()" style="background:var(--bg);border:1px solid var(--border2);border-radius:var(--r2);color:var(--text);font-size:12px;padding:4px 8px;outline:none">
+              <option value="">全部人员</option>
+            </select>
+          </div>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>日期</th><th>日活总计</th><th>新增总计</th><th>充值总计</th><th>日活环比</th></tr></thead>
+            <tbody id="yx-month-tbody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<script>
+const APPS=[
+  {code:'TJ-091',name:'911大事件'},
+  {code:'TJ-058',name:'911吃瓜网'},
+  {code:'JHA-062',name:'推特成人版'},
+  {code:'TJ-029',name:'小黄书'},
+  {code:'TJ-032',name:'抖瓜网'},
+  {code:'DX-083',name:'xvideo中文版'},
+  {code:'DX-077',name:'小红书'},
+  {code:'DX-058',name:'不良少女'},
+  {code:'DX-028',name:'麻豆传媒web'},
+  {code:'JHA-077',name:'瑞XV'},
+  {code:'JHA-155',name:'老司鸡'},
+  {code:'JHA-055',name:'涩漫天堂'},
+  {code:'JHA-158',name:'樱花色漫'},
+  {code:'YC-151',name:'天美传媒'},
+  {code:'YC-139',name:'91AV'},
+  {code:'HX-030',name:'魅影'},
+  {code:'HX-044',name:'潮汐映画'},
+  {code:'HX-048',name:'18禁漫'},
+  {code:'HX-031',name:'淫君子'},
+  {code:'HX-034',name:'51吃瓜'},
+  {code:'JHG-057',name:'老色批'},
+  {code:'JHG-051',name:'顶通H漫'},
+  {code:'JHG-055',name:'恒香-瓜瓜社'},
+  {code:'DX-098',name:'悦达-懂色帝'},
+];
+const OPERATORS=['潘昊','浦东','李易飞','段良军','王云赫','刘文鹏','欧阳子瑜','王云熙'];
+const BCOLS=['b-amber','b-purple','b-blue','b-green','b-pink','b-red','b-blue','b-green'];
+var _entryChart1=null,_entryChart2=null;
+
+function _ls(k,def){try{return JSON.parse(localStorage.getItem(k)||def);}catch(e){return JSON.parse(def);}}
+let entries     = _ls('bl_entries','[]');
+let expenses    = _ls('bl_expenses','[]');
+let buliangList = _ls('bl_buliang','[]');
+let dauData     = _ls('bl_dau','{}');
+let yxData      = _ls('bl_yandex','{}');
+
+function safeLS(action,key,val){
+  try{
+    if(action==='set') localStorage.setItem(key,val);
+    if(action==='get') return localStorage.getItem(key);
+  }catch(e){ console.warn('localStorage不可用，数据仅保存在内存中'); }
+  return null;
+}
+function save(){
+  safeLS('set','bl_entries',  JSON.stringify(entries));
+  safeLS('set','bl_expenses', JSON.stringify(expenses));
+  safeLS('set','bl_buliang',  JSON.stringify(buliangList));
+  safeLS('set','bl_dau',      JSON.stringify(dauData));
+  safeLS('set','bl_yandex',   JSON.stringify(yxData));
+}
+
+function showPage(id,el){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
+  document.getElementById('page-'+id).classList.add('active');
+  el.classList.add('active');
+  ({kanban:renderKanban,reminder:renderReminder,expense:renderExpenses,entry:initEntryPage,dau:initDauPage,yandex:initYxPage})[id]?.();
+}
+
+const fmt  = n=>parseFloat(n||0).toLocaleString('zh-CN',{minimumFractionDigits:2,maximumFractionDigits:2});
+const fmtN = n=>Math.round(n||0).toLocaleString('zh-CN');
+const today=()=>{const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');};
+const prevDay=d=>{const dt=new Date(d);dt.setDate(dt.getDate()-1);return dt.toISOString().slice(0,10);};
+const last7=()=>Array.from({length:7},(_,i)=>{const d=new Date();d.setDate(d.getDate()-(6-i));return d.toISOString().slice(0,10);});
+
+function weekStart(){
+  const d=new Date();
+  const day=d.getDay()||7;
+  d.setDate(d.getDate()-day+1);
+  return d.toISOString().slice(0,10);
+}
+
+function trend(cur,prev){
+  const d=cur-prev;
+  if(!prev&&!cur)return '<span class="trend-flat">—</span>';
+  if(d>0)return`<span class="trend-up">▲ ${fmtN(d)}</span>`;
+  if(d<0)return`<span class="trend-down">▼ ${fmtN(-d)}</span>`;
+  return'<span class="trend-flat">持平</span>';
+}
+
+function renderBar(elId,labels,vals,c1,c2){
+  const el=document.getElementById(elId);
+  const h=parseInt(el.style.height)||100;
+  const max=Math.max(...vals,1);
+  el.innerHTML=labels.map((lbl,i)=>{
+    const fh=Math.round((vals[i]/max)*(h-20));
+    return`<div class="bar-col"><div class="bar-val">${vals[i]>0?fmtN(vals[i]):''}</div><div class="bar-fill" style="height:${fh}px;background:linear-gradient(180deg,${c1},${c2})"></div><div class="bar-lbl">${lbl}</div></div>`;
+  }).join('');
+}
+
+// ── Kanban ─────────────────────────────────────────
+let _kanbanYm = null;
+function getKanbanYm(){
+  if(!_kanbanYm){ const n=new Date(); _kanbanYm=n.getFullYear()+'-'+String(n.getMonth()+1).padStart(2,'0'); }
+  return _kanbanYm;
+}
+function shiftKanbanMonth(dir){
+  const [y,m]=getKanbanYm().split('-').map(Number);
+  const nd=new Date(y,m-1+dir,1);
+  _kanbanYm=nd.getFullYear()+'-'+String(nd.getMonth()+1).padStart(2,'0');
+  renderKanban();
+  // 如果切换到新月份需要从表格拉取数据
+  syncMonthIfNeeded(_kanbanYm);
+}
+async function syncMonthIfNeeded(ym){
+  // 检查是否已有该月数据
+  const hasDau=Object.keys(dauData).some(d=>d.startsWith(ym));
+  if(!hasDau){
+    setSyncStatus('⏳ 加载'+ym+'...','sync-loading');
+    try{
+      const [dr,yr,er,xr]=await Promise.all([gsFetch('dau',ym),gsFetch('yandex',ym),gsFetch('entries',ym),gsFetch('expense',ym)]);
+      if(dr.data) Object.assign(dauData,dr.data);
+      if(yr.data) Object.assign(yxData,yr.data);
+      if(er.data&&er.data.length){
+        const other=entries.filter(e=>e.start&&!e.start.startsWith(ym));
+        entries=[...other,...er.data.map((r,i)=>({id:'gs_'+r.date+'_'+i,start:r.date,client:r.client,type:r.type,product:r.product,rmb:r.rmb,end:r.end||'',operator:r.operator,station:r.station||''}))];
+      }
+      if(xr.data&&xr.data.length){
+        const other=expenses.filter(e=>e.date&&!e.date.startsWith(ym));
+        expenses=[...other,...xr.data.map((r,i)=>({id:'gs_'+r.date+'_'+i,date:r.date,cat:r.cat,amount:r.amount,usdt:r.usdt,note:r.note}))];
+      }
+      safeLS('set','bl_dau',JSON.stringify(dauData));
+      safeLS('set','bl_yandex',JSON.stringify(yxData));
+      const t=new Date();
+      setSyncStatus('✓ 已同步 '+t.getHours().toString().padStart(2,'0')+':'+t.getMinutes().toString().padStart(2,'0'),'sync-ok');
+      renderKanban();
+    }catch(e){ setSyncStatus('✗ 加载失败','sync-err'); }
+  }
+}
+function renderKanban(){
+  const ym=getKanbanYm();
+  const [y,m]=ym.split('-').map(Number);
+  document.getElementById('kanban-month-label').textContent=`${y} 年 ${m} 月`;
+  const month=entries.filter(e=>e.start&&e.start.startsWith(ym));
+  const ws=weekStart();
+  const weekEntries=entries.filter(e=>e.start&&e.start>=ws&&e.start<=today());
+  const totalRmb=month.reduce((s,e)=>s+e.rmb,0);
+  const weekRmb=weekEntries.reduce((s,e)=>s+e.rmb,0);
+  const totalExp=expenses.filter(ex=>ex.date&&ex.date.startsWith(ym)).reduce((s,ex)=>s+ex.amount,0);
+  document.getElementById('m-week-rmb').textContent=fmt(weekRmb);
+  document.getElementById('m-rmb').textContent=fmt(totalRmb);
+  document.getElementById('m-profit').textContent=fmt(totalRmb-totalExp);
+  document.getElementById('m-exp').textContent=fmt(totalExp);
+
+  // 当月 APP 日活总计
+  const allDays=Object.keys(dauData).filter(d=>d.startsWith(ym));
+  const monthDau=allDays.reduce((s,d)=>s+APPS.reduce((ss,a)=>ss+(dauData[d][a.code]||0),0),0);
+  // 当月 Yandex 总计
+  const allYxDays=Object.keys(yxData).filter(d=>d.startsWith(ym));
+  const monthYx=allYxDays.reduce((s,d)=>s+OPERATORS.reduce((ss,op)=>ss+(yxData[d][op+'_dau']||yxData[d][op]||0),0),0);
+  // 上个月
+  const lastD=new Date(y,m-2,1);
+  const lastYm=lastD.getFullYear()+'-'+String(lastD.getMonth()+1).padStart(2,'0');
+  const lastDau=Object.keys(dauData).filter(d=>d.startsWith(lastYm)).reduce((s,d)=>s+APPS.reduce((ss,a)=>ss+(dauData[d][a.code]||0),0),0);
+  const lastYx=Object.keys(yxData).filter(d=>d.startsWith(lastYm)).reduce((s,d)=>s+OPERATORS.reduce((ss,op)=>ss+(yxData[d][op+'_dau']||yxData[d][op]||0),0),0);
+
+  const monthAll=monthDau+monthYx;
+  const lastAll=lastDau+lastYx;
+
+  const safeSet=(id,v)=>{const el=document.getElementById(id);if(el)el.textContent=v;};
+  const safeHtml=(id,v)=>{const el=document.getElementById(id);if(el)el.innerHTML=v;};
+  safeSet('m-dau-month',monthDau>0?fmtN(monthDau):'—');
+  safeSet('m-yx-month',monthYx>0?fmtN(monthYx):'—');
+  safeSet('m-all-dau',monthAll>0?fmtN(monthAll):'—');
+
+  function cmpHtml(cur,prev){
+    if(!prev)return'<span style="color:var(--text3)">上月: —</span>';
+    const d=cur-prev,pct=prev>0?Math.round(d/prev*100):0;
+    const col=d>=0?'var(--accent)':'var(--red)',arrow=d>=0?'▲':'▼';
+    return`<span style="color:var(--text3)">上月 ${fmtN(prev)}</span> <span style="color:${col}">${arrow}${fmtN(Math.abs(d))} (${pct}%)</span>`;
+  }
+  safeHtml('m-dau-cmp',cmpHtml(monthDau,lastDau));
+  safeHtml('m-yx-cmp',cmpHtml(monthYx,lastYx));
+  safeHtml('m-all-cmp',cmpHtml(monthAll,lastAll));
+
+  const kbEl=document.getElementById('kanban-tbody');if(kbEl)kbEl.innerHTML=month.slice().reverse().map(e=>`<tr>
+    <td>${e.start}</td><td><strong>${e.client}</strong></td>
+    <td>${e.type?`<span class="badge b-purple">${e.type}</span>`:'—'}</td>
+    <td style="max-width:130px;overflow:hidden;text-overflow:ellipsis">${e.product||'—'}</td>
+    <td>${e.station||'—'}</td>
+    <td class="num">${fmt(e.rmb)}</td>
+    <td>${e.operator||'—'}</td>
+  </tr>`).join('')||'<tr class="empty-row"><td colspan="7">本月暂无记录</td></tr>';
+
+  loadDailyKanban();
+  setTimeout(renderKanbanCharts, 50);
+}
+
+// ── 补量看板 ───────────────────────────────────────
+function calcBuliang(){
+  const p=parseFloat(document.getElementById('bl-price').value)||0;
+  const q=parseFloat(document.getElementById('bl-qty').value)||0;
+  document.getElementById('bl-total').value=fmt(p*q);
+}
+
+function addBuliang(){
+  const g=id=>document.getElementById(id);
+  const price=parseFloat(g('bl-price').value)||0;
+  const qty=parseFloat(g('bl-qty').value)||0;
+  const b={id:Date.now(),product:g('bl-product').value,group:g('bl-group').value.trim(),type:g('bl-type').value,start:g('bl-start').value,end:g('bl-end').value,price,qty,total:price*qty};
+  if(!b.product||!b.start){alert('请选择产品名称和开始时间');return;}
+  buliangList.push(b);save();
+  ['bl-product','bl-group','bl-price','bl-qty','bl-total','bl-start','bl-end'].forEach(id=>g(id).value='');
+  ['bl-type'].forEach(id=>g(id).value='');
+  renderBuliangPage();
+}
+
+function delBuliang(id){if(!confirm('确认删除？'))return;buliangList=buliangList.filter(b=>b.id!==id);save();renderBuliangPage();}
+
+function renderBuliangPage(){
+  const ym=new Date().toISOString().slice(0,7);
+  const monthList=buliangList.filter(b=>b.start&&b.start.startsWith(ym));
+  const monthTotal=monthList.reduce((s,b)=>s+b.total,0);
+  const allTotal=buliangList.reduce((s,b)=>s+b.total,0);
+  document.getElementById('bl-m-count').textContent=monthList.length;
+  document.getElementById('bl-m-total').textContent=fmt(monthTotal);
+  document.getElementById('bl-all-total').textContent=fmt(allTotal);
+  document.getElementById('bl-grand-total').textContent=fmt(allTotal);
+  document.getElementById('buliang-tbody').innerHTML=buliangList.slice().reverse().map(b=>`<tr>
+    <td style="max-width:140px;overflow:hidden;text-overflow:ellipsis">${b.product||'—'}</td>
+    <td>${b.group||'—'}</td>
+    <td>${b.type?`<span class="badge b-amber">${b.type}</span>`:'—'}</td>
+    <td>${b.start||'—'}</td><td>${b.end||'—'}</td>
+    <td class="num">${fmt(b.price)}</td>
+    <td class="num">${fmtN(b.qty)}</td>
+    <td class="num" style="color:var(--amber)">${fmt(b.total)}</td>
+    <td><button class="btn btn-sm btn-del" onclick="delBuliang(${b.id})">删除</button></td>
+  </tr>`).join('')||'<tr class="empty-row"><td colspan="9">暂无记录</td></tr>';
+}
+
+// ── Entry Stats ─────────────────────────────────────
+let _esChart = null;
+let _entryMonthData = [];
+
+function initEntryPage(){
+  // populate month selector
+  const sel = document.getElementById('entry-month-sel');
+  if(!sel) return;
+  const now = new Date();
+  const months = Array.from({length:12},(_,i)=>{
+    const d = new Date(now.getFullYear(), now.getMonth()-i, 1);
+    return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0');
+  });
+  sel.innerHTML = months.map((m,i)=>`<option value="${m}"${i===0?' selected':''}>${m}</option>`).join('');
+  // populate person filter
+  const pf = document.getElementById('es-person-filter');
+  if(pf){
+    pf.innerHTML = '<option value="">全部人员</option>' +
+      [...new Set(entries.map(e=>e.operator).filter(Boolean))].sort()
+      .map(op=>`<option value="${op}">${op}</option>`).join('');
+  }
+  renderEntryStats();
+}
+
+function renderEntryStats(){
+  const sel = document.getElementById('entry-month-sel');
+  const ym = sel ? sel.value : currentYm();
+  const month = entries.filter(e=>e.start&&e.start.startsWith(ym));
+
+  // metrics
+  const totalRmb = month.reduce((s,e)=>s+e.rmb,0);
+  const persons = [...new Set(month.map(e=>e.operator).filter(Boolean))];
+  const setEl = (id,v) => { const el=document.getElementById(id); if(el) el.textContent=v; };
+  setEl('es-total', totalRmb>0 ? totalRmb.toLocaleString('zh-CN',{minimumFractionDigits:2}) : '—');
+  setEl('es-count', month.length || '—');
+  setEl('es-persons', persons.length || '—');
+  setEl('es-avg', persons.length>0 ? (totalRmb/persons.length).toLocaleString('zh-CN',{minimumFractionDigits:2}) : '—');
+
+  // operator breakdown
+  const opStats = persons.map(op=>({
+    op,
+    count: month.filter(e=>e.operator===op).length,
+    rmb: month.filter(e=>e.operator===op).reduce((s,e)=>s+e.rmb,0)
+  })).sort((a,b)=>b.rmb-a.rmb);
+
+  // update person filter dropdown
+  const pf = document.getElementById('es-person-filter');
+  if(pf){
+    const cur = pf.value;
+    pf.innerHTML = '<option value="">全部人员</option>' +
+      persons.sort().map(op=>`<option value="${op}"${op===cur?' selected':''}>${op}</option>`).join('');
+  }
+
+  // table
+  const colors = ['b-green','b-blue','b-amber','b-purple','b-red','b-pink','b-blue','b-amber'];
+  const tbody = document.getElementById('es-tbody');
+  if(tbody){
+    tbody.innerHTML = opStats.map((r,i)=>`<tr>
+      <td><span class="badge ${colors[i%colors.length]}">${i+1}</span></td>
+      <td><strong>${r.op}</strong></td>
+      <td class="num">${r.count}</td>
+      <td class="num green">${r.rmb.toLocaleString('zh-CN',{minimumFractionDigits:2})}</td>
+      <td class="num" style="color:var(--text3)">${totalRmb>0?Math.round(r.rmb/totalRmb*100):0}%</td>
+    </tr>`).join('') || '<tr class="empty-row"><td colspan="5">暂无数据</td></tr>';
+  }
+
+  // chart
+  if(typeof Chart==='undefined'){ setTimeout(renderEntryStats,300); return; }
+  if(_esChart){ try{_esChart.destroy();}catch(e){} _esChart=null; }
+  const elC = document.getElementById('es-chart');
+  if(elC && opStats.length > 0){
+    const bgColors=['rgba(74,222,128,0.75)','rgba(34,211,238,0.75)','rgba(251,191,36,0.75)','rgba(167,139,250,0.75)','rgba(248,113,113,0.75)','rgba(244,114,182,0.75)','rgba(99,179,237,0.75)','rgba(252,211,77,0.75)'];
+    const grid='rgba(255,255,255,0.05)', tick={color:'rgba(255,255,255,0.35)',font:{size:10}};
+    _esChart = new Chart(elC,{
+      type:'bar',
+      data:{
+        labels: opStats.map(r=>r.op),
+        datasets:[{
+          label:'收款RMB',
+          data: opStats.map(r=>r.rmb),
+          backgroundColor: bgColors.slice(0,opStats.length),
+          borderColor: bgColors.slice(0,opStats.length).map(c=>c.replace('0.75','1')),
+          borderWidth:1, borderRadius:8, borderSkipped:false
+        }]
+      },
+      options:{
+        responsive:true, maintainAspectRatio:false,
+        plugins:{
+          legend:{display:false},
+          tooltip:{
+            backgroundColor:'rgba(14,15,19,0.95)',titleColor:'#e8e9ef',bodyColor:'#8b8fa8',
+            borderColor:'rgba(255,255,255,0.08)',borderWidth:1,
+            callbacks:{label:ctx=>' ¥'+Number(ctx.raw).toLocaleString('zh-CN',{minimumFractionDigits:0})}
+          }
+        },
+        scales:{
+          x:{grid:{color:grid},ticks:tick,border:{color:'transparent'}},
+          y:{grid:{color:grid},ticks:{...tick,callback:v=>'¥'+(v>=10000?Math.round(v/10000)+'万':v)},border:{color:'transparent'}}
+        }
+      }
+    });
+  }
+
+  renderEntryDetail();
+}
+
+function renderEntryDetail(){
+  const sel = document.getElementById('entry-month-sel');
+  const ym = sel ? sel.value : currentYm();
+  const pf = document.getElementById('es-person-filter');
+  const person = pf ? pf.value : '';
+  let month = entries.filter(e=>e.start&&e.start.startsWith(ym));
+  if(person) month = month.filter(e=>e.operator===person);
+  month = month.slice().sort((a,b)=>b.start.localeCompare(a.start));
+  const tbody = document.getElementById('es-detail-tbody');
+  if(tbody){
+    tbody.innerHTML = month.map(e=>`<tr>
+      <td>${e.start}</td>
+      <td><strong>${e.client||'—'}</strong></td>
+      <td>${e.type?`<span class="badge b-purple">${e.type}</span>`:'—'}</td>
+      <td style="max-width:120px;overflow:hidden;text-overflow:ellipsis">${e.product||'—'}</td>
+      <td>${e.mode||e.station||'—'}</td>
+      <td class="num green">${(e.rmb||0).toLocaleString('zh-CN',{minimumFractionDigits:2})}</td>
+      <td>${e.operator||'—'}</td>
+      <td>${e.end||'—'}</td>
+    </tr>`).join('') || '<tr class="empty-row"><td colspan="8">暂无数据</td></tr>';
+  }
+}
+
+async function syncEntryMonthData(){
+  const sel = document.getElementById('entry-month-sel');
+  const ym = sel ? sel.value : currentYm();
+  setSyncStatus('⏳ 同步'+ym+'...','sync-loading');
+  try{
+    const res = await gsFetch('entries', ym);
+    if(res.data && res.data.length > 0){
+      const other = entries.filter(e=>!e.start||!e.start.startsWith(ym));
+      const gs = res.data.map((r,i)=>({
+        id:'gs_'+r.date+'_'+i, start:r.date, client:r.client,
+        type:r.type, product:r.product, rmb:r.rmb,
+        end:r.end||'', operator:r.operator, station:r.station||'', mode:r.station||''
+      }));
+      entries = [...other, ...gs];
+      safeLS('set','bl_entries',JSON.stringify(entries));
+    }
+    const t=new Date();
+    setSyncStatus('✓ 已同步 '+t.getHours().toString().padStart(2,'0')+':'+t.getMinutes().toString().padStart(2,'0'),'sync-ok');
+    renderEntryStats();
+  }catch(e){
+    setSyncStatus('✗ 同步失败','sync-err');
+  }
+}
+
+// keep renderEntryTable as alias for compatibility
+function renderEntryTable(){ initEntryPage(); }
+function addEntry(){ console.log('录入功能已移至Google表格'); }
+// ── Summary ────────────────────────────────────────
+function getWeekStart(dateStr){
+  const d=new Date(dateStr);
+  const day=d.getDay()||7;
+  d.setDate(d.getDate()-day+1);
+  return d.toISOString().slice(0,10);
+}
+function loadSummary(){
+  const d=document.getElementById('sum-date').value;if(!d)return;
+  // 当日
+  const day=entries.filter(e=>e.start===d);
+  const blDay=buliangList.filter(b=>b.start===d).reduce((s,b)=>s+b.total,0);
+  document.getElementById('s-rmb').textContent=fmt(day.reduce((s,e)=>s+e.rmb,0));
+  document.getElementById('s-count').textContent=day.length;
+  document.getElementById('s-bl').textContent=fmt(blDay);
+  // 本周（以查询日期所在周为基准）
+  const ws=getWeekStart(d);
+  const we=new Date(ws);we.setDate(we.getDate()+6);const weStr=we.toISOString().slice(0,10);
+  const weekEntries=entries.filter(e=>e.start&&e.start>=ws&&e.start<=weStr);
+  const weekBl=buliangList.filter(b=>b.start&&b.start>=ws&&b.start<=weStr).reduce((s,b)=>s+b.total,0);
+  document.getElementById('s-week-rmb').textContent=fmt(weekEntries.reduce((s,e)=>s+e.rmb,0));
+  document.getElementById('s-week-count').textContent=weekEntries.length;
+  document.getElementById('s-week-bl').textContent=fmt(weekBl);
+  document.getElementById('sum-tbody').innerHTML=day.map(e=>`<tr>
+    <td><strong>${e.client}</strong></td>
+    <td>${e.type?`<span class="badge b-purple">${e.type}</span>`:'—'}</td>
+    <td>${e.station||'—'}</td><td>${e.product||'—'}</td>
+    <td class="num">${fmt(e.rmb)}</td><td>${e.operator||'—'}</td>
+  </tr>`).join('')||'<tr class="empty-row"><td colspan="6">当日无记录</td></tr>';
+}
+
+// ── Reminder ───────────────────────────────────────
+function renderReminder(){
+  const now=new Date();now.setHours(0,0,0,0);
+  const withEnd=entries.filter(e=>e.end);
+  const alerts=withEnd.map(e=>{const end=new Date(e.end);end.setHours(0,0,0,0);return{...e,diff:Math.round((end-now)/86400000)};}).filter(e=>e.diff<=7).sort((a,b)=>a.diff-b.diff);
+  document.getElementById('reminder-list').innerHTML=alerts.length?alerts.map(e=>{
+    const d=e.diff<0,lbl=e.diff<0?`已逾期 ${-e.diff} 天`:e.diff===0?'今日到期':`还剩 ${e.diff} 天`;
+    return`<div class="alert ${d?'alert-danger':'alert-warn'}"><div><div class="alert-name">${e.client} · ${e.station||'—'}</div><div class="alert-sub">结束日期：${e.end}</div></div><span class="badge ${d?'b-red':'b-amber'}">${lbl}</span></div>`;
+  }).join(''):'<p style="color:var(--text3);font-size:13px">暂无即将到期合约</p>';
+  document.getElementById('reminder-tbody').innerHTML=withEnd.map(e=>{
+    const end=new Date(e.end);end.setHours(0,0,0,0);const diff=Math.round((end-now)/86400000);
+    return`<tr><td><strong>${e.client}</strong></td><td>${e.station||'—'}</td><td>${e.start}</td><td>${e.end}</td><td class="num">${diff<0?'—':diff+' 天'}</td><td>${diff<0?'<span class="badge b-red">已到期</span>':diff<=3?'<span class="badge b-amber">即将到期</span>':'<span class="badge b-green">正常</span>'}</td></tr>`;
+  }).join('')||'<tr class="empty-row"><td colspan="6">暂无合约记录</td></tr>';
+}
+
+// ── Expense ────────────────────────────────────────
+function addExpense(){
+  const g=id=>document.getElementById(id);
+  const ex={id:Date.now(),date:g('e-date').value,cat:g('e-cat').value,amount:parseFloat(g('e-rmb').value)||0,usdt:parseFloat(g('e-usdt').value)||0,note:g('e-note').value.trim()};
+  if(!ex.date||!ex.cat){alert('请选择日期和类别');return;}
+  expenses.push(ex);save();
+  ['e-rmb','e-usdt','e-note'].forEach(id=>g(id).value='');g('e-cat').value='';
+  renderExpenses();
+}
+function delExpense(id){if(!confirm('确认删除？'))return;expenses=expenses.filter(e=>e.id!==id);save();renderExpenses();}
+function renderExpenses(){
+  const cats=['商务补量','运营开支','商务退款'],mids=['e-m1','e-m2','e-m3'],bmap={'商务补量':'b-amber','运营开支':'b-red','商务退款':'b-blue'};
+  let total=0;cats.forEach((c,i)=>{const s=expenses.filter(e=>e.cat===c).reduce((sum,e)=>sum+e.amount,0);document.getElementById(mids[i]).textContent=fmt(s);total+=s;});
+  document.getElementById('e-total').textContent=fmt(total);
+  document.getElementById('expense-tbody').innerHTML=expenses.slice().reverse().map(e=>`<tr>
+    <td>${e.date}</td><td><span class="badge ${bmap[e.cat]||'b-blue'}">${e.cat}</span></td>
+    <td class="num">${fmt(e.amount)}</td><td class="num">${fmt(e.usdt)}</td>
+    <td>${e.note||'—'}</td>
+    <td><button class="btn btn-sm btn-del" onclick="delExpense(${e.id})">删除</button></td>
+  </tr>`).join('')||'<tr class="empty-row"><td colspan="6">暂无开支记录</td></tr>';
+}
+
+// ── DAU ────────────────────────────────────────────
+let dauCD=today();
+function initDauPage(){dauCD=today();document.getElementById('dau-date').value=dauCD;renderDauTable(dauCD);renderDauBar();initDauMonthSelect();renderDauMonthTable();}
+function loadDauQuery(){dauCD=document.getElementById('dau-date').value;if(!dauCD)return;renderDauTable(dauCD);}
+function renderDauTable(d){
+  const cur=dauData[d]||{},prev=dauData[prevDay(d)]||{};
+  let tC=0,tP=0,tIn=0,tPay=0;
+  document.getElementById('dau-tbody').innerHTML=APPS.map(a=>{
+    const c=cur[a.code]||0,p=prev[a.code]||0;
+    const inflow=cur[a.code+'_in']||0,retain=cur[a.code+'_ret']||0,pay=cur[a.code+'_pay']||0;
+    tC+=c;tP+=p;tIn+=inflow;tPay+=pay;
+    return`<tr>
+      <td><span class="badge b-purple" style="font-size:10px">${a.code}</span></td>
+      <td>${a.name}</td>
+      <td><input class="num-input" type="number" min="0" value="${c||''}" placeholder="0" id="di-${a.code}" oninput="setDauVal('${d}','${a.code}',this.value)"/></td>
+      <td><input class="num-input" type="number" min="0" value="${inflow||''}" placeholder="0" id="di-in-${a.code}" oninput="setDauVal('${d}','${a.code}_in',this.value)"/></td>
+      <td><input class="num-input" type="number" min="0" value="${retain||''}" placeholder="0" id="di-ret-${a.code}" oninput="setDauVal('${d}','${a.code}_ret',this.value)"/></td>
+      <td><input class="num-input" type="number" min="0" value="${pay||''}" placeholder="0" id="di-pay-${a.code}" oninput="setDauVal('${d}','${a.code}_pay',this.value)"/></td>
+      <td class="num">${p?fmtN(p):'—'}</td>
+      <td>${trend(c,p)}</td>
+    </tr>`;
+  }).join('');
+  document.getElementById('dau-total-today').textContent=fmtN(tC);
+  document.getElementById('dau-total-yest').textContent=fmtN(tP);
+  document.getElementById('dau-total-inflow').textContent=fmtN(tIn);
+  document.getElementById('dau-total-pay').textContent=fmtN(tPay);
+  renderDauRank(d);
+}
+function setDauVal(d,code,v){if(!dauData[d])dauData[d]={};dauData[d][code]=parseFloat(v)||0;if(d===today())loadDailyKanban();}
+function saveDau(){
+  const d=document.getElementById('dau-date').value;if(!d)return;
+  if(!dauData[d])dauData[d]={};
+  APPS.forEach(a=>{
+    const inp=document.getElementById('di-'+a.code);if(inp)dauData[d][a.code]=parseFloat(inp.value)||0;
+    const inInp=document.getElementById('di-in-'+a.code);if(inInp)dauData[d][a.code+'_in']=parseFloat(inInp.value)||0;
+    const retInp=document.getElementById('di-ret-'+a.code);if(retInp)dauData[d][a.code+'_ret']=parseFloat(retInp.value)||0;
+    const payInp=document.getElementById('di-pay-'+a.code);if(payInp)dauData[d][a.code+'_pay']=parseFloat(payInp.value)||0;
+  });
+  save();alert('✓ 日活数据已保存！');renderDauBar();renderDauRank(d);renderDauMonthTable();
+}
+function renderDauBar(){
+  const days=last7();
+  renderBar('dau-bar',days.map(d=>d.slice(5)),days.map(d=>APPS.reduce((s,a)=>s+(dauData[d]?dauData[d][a.code]||0:0),0)),'rgba(167,139,250,.65)','rgba(167,139,250,.1)');
+}
+function renderDauRank(d){
+  const cur=dauData[d]||{};
+  const ranked=APPS.map(a=>({name:a.name,val:cur[a.code]||0})).sort((a,b)=>b.val-a.val).slice(0,5);
+  document.getElementById('dau-rank-tbody').innerHTML=ranked.map((r,i)=>`<tr><td><span class="badge ${BCOLS[i]}">${i+1}</span></td><td>${r.name}</td><td class="num">${fmtN(r.val)}</td></tr>`).join('')||'<tr class="empty-row"><td colspan="3">暂无数据</td></tr>';
+}
+
+// ── Yandex ─────────────────────────────────────────
+let yxCD=today();
+function initYxPage(){yxCD=today();document.getElementById('yx-date').value=yxCD;renderYxTable(yxCD);renderYxBar();initYxMonthSelect();renderYxMonthTable();}
+function loadYxQuery(){yxCD=document.getElementById('yx-date').value;if(!yxCD)return;renderYxTable(yxCD);}
+function renderYxTable(d){
+  const cur=yxData[d]||{},prev=yxData[prevDay(d)]||{};
+  let tC=0,tP=0,tNew=0,tPay=0;
+  document.getElementById('yx-tbody').innerHTML=OPERATORS.map((op,i)=>{
+    const c=cur[op+'_dau']||0,p=prev[op+'_dau']||0;
+    const nw=cur[op+'_new']||0,pay=cur[op+'_pay']||0;
+    tC+=c;tP+=p;tNew+=nw;tPay+=pay;
+    return`<tr>
+      <td><strong>${op}</strong></td>
+      <td><input class="num-input" type="number" min="0" value="${c||''}" placeholder="0" id="yi-dau-${i}" oninput="setYxVal3(document.getElementById('yx-date').value,'${op}','dau',this.value)"/></td>
+      <td class="num">${p?fmtN(p):'—'}</td>
+      <td>${trend(c,p)}</td>
+      <td><input class="num-input" type="number" min="0" value="${nw||''}" placeholder="0" id="yi-new-${i}" oninput="setYxVal3(document.getElementById('yx-date').value,'${op}','new',this.value)"/></td>
+      <td><input class="num-input" type="number" min="0" value="${pay||''}" placeholder="0" id="yi-pay-${i}" oninput="setYxVal3(document.getElementById('yx-date').value,'${op}','pay',this.value)"/></td>
+    </tr>`;
+  }).join('');
+  document.getElementById('yx-total-today').textContent=fmtN(tC);
+  document.getElementById('yx-total-yest').textContent=fmtN(tP);
+  document.getElementById('yx-total-new').textContent=fmtN(tNew);
+  document.getElementById('yx-total-pay').textContent=fmtN(tPay);
+  renderYxRank(d);
+}
+function setYxVal3(d,op,field,v){if(!d)return;if(!yxData[d])yxData[d]={};yxData[d][op+'_'+field]=parseFloat(v)||0;if(d===today())loadDailyKanban();}
+function saveYandex(){
+  const d=document.getElementById('yx-date').value;if(!d)return;
+  if(!yxData[d])yxData[d]={};
+  OPERATORS.forEach((op,i)=>{
+    ['dau','new','pay'].forEach((f,fi)=>{
+      const inp=document.getElementById('yi-'+f+'-'+i);
+      if(inp)yxData[d][op+'_'+f]=parseFloat(inp.value)||0;
+    });
+  });
+  save();alert('✓ Yandex 数据已保存！');renderYxBar();renderYxRank(d);loadDailyKanban();
+}
+function renderYxBar(){
+  const days=last7();
+  renderBar('yx-bar',days.map(d=>d.slice(5)),days.map(d=>OPERATORS.reduce((s,op)=>s+(yxData[d]?yxData[d][op+'_dau']||yxData[d][op]||0:0),0)),'rgba(34,211,238,.65)','rgba(34,211,238,.1)');
+}
+function renderYxRank(d){
+  const cur=yxData[d]||{};
+  const ranked=OPERATORS.map(op=>({name:op,val:cur[op+'_dau']||cur[op]||0})).sort((a,b)=>b.val-a.val);
+  document.getElementById('yx-rank-tbody').innerHTML=ranked.map((r,i)=>`<tr><td><span class="badge ${BCOLS[i]||'b-blue'}">${i+1}</span></td><td>${r.name}</td><td class="num">${fmtN(r.val)}</td></tr>`).join('');
+}
+
+// ── Daily Kanban (auto from dauData & yxData) ──────
+function loadDailyKanban(){
+  const d=today();
+  const appDau=APPS.reduce((s,a)=>s+(dauData[d]?dauData[d][a.code]||0:0),0);
+  const yxRec=yxData[d]||{};
+  const yxDau=OPERATORS.reduce((s,op)=>s+(yxRec[op+'_dau']||yxRec[op]||0),0);
+  const yxNew=OPERATORS.reduce((s,op)=>s+(yxRec[op+'_new']||0),0);
+  const yxPay=OPERATORS.reduce((s,op)=>s+(yxRec[op+'_pay']||0),0);
+  const dauTotal=appDau+yxDau;
+  const set=(id,v)=>{const el=document.getElementById(id);if(el)el.textContent=v>0?fmtN(v):'—';};
+  set('dk-dau-total',dauTotal);
+  set('dk-dau-app',appDau);
+  set('dk-dau-yx',yxDau);
+  set('dk-new-total',yxNew);
+  set('dk-new-yx',yxNew);
+  set('dk-pay-total',yxPay);
+  set('dk-pay-yx',yxPay);
+}
+
+
+// ── Kanban Charts ──────────────────────────────────
+let _charts={};
+function destroyChart(k){if(_charts[k]){try{_charts[k].destroy();}catch(e){}delete _charts[k];}}
+
+function mkOpts(extra){
+  const grid='rgba(255,255,255,0.05)', tick={color:'rgba(255,255,255,0.35)',font:{size:10}};
+  return Object.assign({responsive:true,maintainAspectRatio:false,
+    plugins:{legend:{display:false},tooltip:{backgroundColor:'rgba(14,15,19,0.95)',titleColor:'#e8e9ef',bodyColor:'#8b8fa8',borderColor:'rgba(255,255,255,0.08)',borderWidth:1,padding:10}},
+    scales:{x:{grid:{color:grid},ticks:tick,border:{color:'transparent'}},y:{grid:{color:grid},ticks:tick,border:{color:'transparent'}}}
+  }, extra||{});
+}
+
+function renderKanbanCharts(){
+  if(typeof Chart==='undefined'){setTimeout(renderKanbanCharts,200);return;}
+  const ym=getKanbanYm();
+  const [_ky,_km]=ym.split('-').map(Number);
+  const now=new Date(_ky,_km-1,15);
+
+  // 1. 折线图：近6月收款
+  const m6=Array.from({length:6},(_,i)=>{const d=new Date(_ky,_km-6+i,1);return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0');});
+  const v6=m6.map(m=>entries.filter(e=>e.start&&e.start.startsWith(m)).reduce((s,e)=>s+e.rmb,0));
+  destroyChart('line');
+  const elL=document.getElementById('chart-line');
+  if(elL){
+    _charts.line=new Chart(elL,{type:'line',
+      data:{labels:m6.map(m=>m.slice(5)+'月'),datasets:[{label:'收款RMB',data:v6,
+        borderColor:'rgba(74,222,128,1)',backgroundColor:'rgba(74,222,128,0.08)',
+        tension:0.4,fill:true,pointBackgroundColor:'rgba(74,222,128,1)',
+        pointRadius:4,pointHoverRadius:6,borderWidth:2}]},
+      options:mkOpts()});
+  }
+
+  // 2. 环形图：本月类型分布
+  const tmap={};
+  entries.filter(e=>e.start&&e.start.startsWith(ym)).forEach(e=>{const k=e.type||'未分类';tmap[k]=(tmap[k]||0)+e.rmb;});
+  const tlbls=Object.keys(tmap), tvals=Object.values(tmap);
+  const PCOLS=['rgba(74,222,128,0.8)','rgba(34,211,238,0.8)','rgba(251,191,36,0.8)','rgba(248,113,113,0.8)','rgba(167,139,250,0.8)','rgba(244,114,182,0.8)'];
+  destroyChart('doughnut');
+  const elD=document.getElementById('chart-doughnut');
+  if(elD){
+    _charts.doughnut=new Chart(elD,{type:'doughnut',
+      data:{labels:tlbls.length?tlbls:['暂无'],datasets:[{data:tvals.length?tvals:[1],
+        backgroundColor:tvals.length?PCOLS.slice(0,tvals.length):['rgba(255,255,255,0.05)'],
+        borderColor:'rgba(14,15,19,0.6)',borderWidth:2,hoverOffset:8}]},
+      options:{responsive:true,maintainAspectRatio:false,cutout:'65%',
+        plugins:{legend:{display:true,position:'right',labels:{color:'rgba(255,255,255,0.5)',font:{size:11},boxWidth:10,padding:10}},
+        tooltip:{backgroundColor:'rgba(14,15,19,0.95)',titleColor:'#e8e9ef',bodyColor:'#8b8fa8',borderColor:'rgba(255,255,255,0.08)',borderWidth:1}}}});
+  }
+
+  // 3. 堆叠面积图：近7日日活
+  const d7=last7();
+  const appV=d7.map(d=>APPS.reduce((s,a)=>s+(dauData[d]?dauData[d][a.code]||0:0),0));
+  const yxV=d7.map(d=>OPERATORS.reduce((s,op)=>s+(yxData[d]?yxData[d][op+'_dau']||yxData[d][op]||0:0),0));
+  destroyChart('area');
+  const elA=document.getElementById('chart-area');
+  if(elA){
+    _charts.area=new Chart(elA,{type:'line',
+      data:{labels:d7.map(d=>d.slice(5)),datasets:[
+        {label:'APP日活',data:appV,borderColor:'rgba(167,139,250,1)',backgroundColor:'rgba(167,139,250,0.25)',fill:true,tension:0.4,borderWidth:2,pointRadius:3,pointHoverRadius:5},
+        {label:'Yandex',data:yxV,borderColor:'rgba(34,211,238,1)',backgroundColor:'rgba(34,211,238,0.15)',fill:true,tension:0.4,borderWidth:2,pointRadius:3,pointHoverRadius:5}
+      ]},
+      options:mkOpts({plugins:{legend:{display:true,position:'top',labels:{color:'rgba(255,255,255,0.45)',font:{size:11},boxWidth:10,padding:12}},
+        tooltip:{backgroundColor:'rgba(14,15,19,0.95)',titleColor:'#e8e9ef',bodyColor:'#8b8fa8',borderColor:'rgba(255,255,255,0.08)',borderWidth:1}}})});
+  }
+
+  // 4. 柱状图：本月开支
+  const ecats=['商务补量','运营开支','商务退款'];
+  const evals=ecats.map(c=>expenses.filter(e=>e.date&&e.date.startsWith(ym)&&e.cat===c).reduce((s,e)=>s+e.amount,0));
+  destroyChart('bar');
+  const elB=document.getElementById('chart-bar');
+  if(elB){
+    _charts.bar=new Chart(elB,{type:'bar',
+      data:{labels:ecats,datasets:[{label:'金额RMB',data:evals,
+        backgroundColor:['rgba(251,191,36,0.7)','rgba(248,113,113,0.7)','rgba(34,211,238,0.7)'],
+        borderColor:['rgba(251,191,36,1)','rgba(248,113,113,1)','rgba(34,211,238,1)'],
+        borderWidth:1,borderRadius:5,borderSkipped:false}]},
+      options:mkOpts({plugins:{legend:{display:false},
+        tooltip:{backgroundColor:'rgba(14,15,19,0.95)',titleColor:'#e8e9ef',bodyColor:'#8b8fa8',borderColor:'rgba(255,255,255,0.08)',borderWidth:1}}})});
+  }
+}
+
+
+// ── Google Sheets Sync ────────────────────────────
+const GS_URL = 'https://script.google.com/macros/s/AKfycbxuTSDsZLLcgRO_iXzcfjPO2BeqUhKao0t77Zq2zX4lIpi4ZgoXyYrUZIWaGd4EFrds6w/exec';
+let _syncing = false;
+
+function setSyncStatus(msg, cls){
+  const el = document.getElementById('sync-status');
+  if(el){ el.textContent = msg; el.className = ''; el.classList.add(cls||''); }
+}
+
+function gsFetch(type, ym){
+  return new Promise((resolve, reject)=>{
+    const cbName = 'gs_cb_'+Date.now()+'_'+Math.random().toString(36).slice(2);
+    // Don't pass ym to server - filter client-side to avoid server-side date matching issues
+    const url = GS_URL+'?type='+type+'&callback='+cbName;
+    const script = document.createElement('script');
+    const timer = setTimeout(()=>{
+      cleanup();
+      reject(new Error('Timeout'));
+    }, 20000);
+    window[cbName] = (data)=>{
+      cleanup();
+      if(!data.ok){ reject(new Error(data.error||'API error')); return; }
+      // Filter by ym client-side
+      if(ym && data.data){
+        if(Array.isArray(data.data)){
+          data.data = data.data.filter(r=>r.date && r.date.startsWith(ym));
+        } else {
+          const filtered={};
+          Object.keys(data.data).forEach(d=>{ if(d.startsWith(ym)) filtered[d]=data.data[d]; });
+          data.data = filtered;
+        }
+      }
+      resolve(data);
+    };
+    function cleanup(){
+      clearTimeout(timer);
+      delete window[cbName];
+      if(script.parentNode) script.parentNode.removeChild(script);
+    }
+    script.onerror = ()=>{ cleanup(); reject(new Error('Script load failed')); };
+    script.src = url;
+    document.head.appendChild(script);
+  });
+}
+
+function currentYm(){
+  const d=new Date();
+  return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0');
+}
+
+async function syncAll(){
+  if(_syncing) return;
+  _syncing = true;
+  setSyncStatus('⏳ 同步中...', 'sync-loading');
+  try {
+    const now2 = new Date();
+    const ym = now2.getFullYear()+'-'+String(now2.getMonth()+1).padStart(2,'0');
+
+    // 1. 日活数据 - 完全替换
+    const dauRes = await gsFetch('dau');
+    if(dauRes.data){
+      dauData = dauRes.data;
+      safeLS('set','bl_dau', JSON.stringify(dauData));
+    }
+
+    // 2. Yandex数据 - 完全替换
+    const yxRes = await gsFetch('yandex');
+    if(yxRes.data){
+      yxData = yxRes.data;
+      safeLS('set','bl_yandex', JSON.stringify(yxData));
+    }
+
+    // 3. 收款记录 - 完全替换
+    const entRes = await gsFetch('entries');
+    if(entRes.data){
+      entries = entRes.data.map((r,i) => ({
+        id:'gs_'+r.date+'_'+i, start:r.date, client:r.client,
+        type:r.type, product:r.product, rmb:r.rmb,
+        end:r.end||'', operator:r.operator, station:r.station||''
+      }));
+      safeLS('set','bl_entries', JSON.stringify(entries));
+    }
+
+    // 4. 运营开支 - 完全替换
+    const expRes = await gsFetch('expense');
+    if(expRes.data){
+      expenses = expRes.data.map((r,i) => ({
+        id:'gs_'+r.date+'_'+i, date:r.date, cat:r.cat,
+        amount:r.amount, usdt:r.usdt, note:r.note
+      }));
+      safeLS('set','bl_expenses', JSON.stringify(expenses));
+    }
+
+    // 刷新所有视图
+    renderKanban();
+    loadDailyKanban();
+    setTimeout(()=>{ try{ renderKanbanCharts(); }catch(e){console.error(e);} }, 300);
+    const _ep=document.getElementById('page-entry');
+    if(_ep&&_ep.classList.contains('active')) setTimeout(renderEntryStats, 400);
+    // 如果收款统计页面打开则刷新
+    const entPage=document.getElementById('page-entry');
+    if(entPage&&entPage.classList.contains('active')) renderEntryStats();
+    const dauPage = document.getElementById('page-dau');
+    if(dauPage && dauPage.classList.contains('active')) initDauPage();
+    const yxPage = document.getElementById('page-yandex');
+    if(yxPage && yxPage.classList.contains('active')) initYxPage();
+
+    const t = new Date();
+    const timeStr = t.getHours().toString().padStart(2,'0')+':'+t.getMinutes().toString().padStart(2,'0');
+    setSyncStatus('✓ 已同步 '+timeStr, 'sync-ok');
+  } catch(err) {
+    console.error('同步失败:', err);
+    setSyncStatus('✗ 失败: '+err.message.slice(0,25), 'sync-err');
+  }
+  _syncing = false;
+}
+
+// ── Init ───────────────────────────────────────────
+// 迁移旧格式 yxData: { "潘昊": 1000 } → { "潘昊_dau": 1000 }
+(function(){
+  let changed=false;
+  Object.keys(yxData).forEach(date=>{
+    const rec=yxData[date];
+    OPERATORS.forEach(op=>{
+      if((op in rec) && !(op+'_dau' in rec)){
+        rec[op+'_dau']=rec[op];
+        delete rec[op];
+        changed=true;
+      }
+    });
+  });
+  if(changed){ localStorage.setItem('bl_yandex',JSON.stringify(yxData)); }
+})();
+
+const _sd=document.getElementById('sum-date'); if(_sd) _sd.value=today();
+const _ed=document.getElementById('e-date'); if(_ed) _ed.value=today();
+const _fs=document.getElementById('f-start'); if(_fs) _fs.value=today();
+renderKanban();
+loadDailyKanban();
+
+// 页面加载后自动同步一次
+setTimeout(syncAll, 800);
+
+// ── DAU Month Overview ─────────────────────────────
+function getDaysInMonth(ym){
+  const [y,m]=ym.split('-').map(Number);
+  const days=[];
+  const totalDays=new Date(y,m,0).getDate();
+  for(let d=1;d<=totalDays;d++){
+    days.push(y+'-'+String(m).padStart(2,'0')+'-'+String(d).padStart(2,'0'));
+  }
+  return days;
+}
+function initDauMonthSelect(){
+  const sel=document.getElementById('dau-month-select');if(!sel)return;
+  const now=new Date();
+  const months=Array.from({length:6},(_,i)=>{
+    const d=new Date(now.getFullYear(),now.getMonth()-i,1);
+    return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0');
+  });
+  sel.innerHTML=months.map((m,i)=>`<option value="${m}"${i===0?' selected':''}>${m}</option>`).join('');
+}
+function renderDauMonthTable(){
+  const sel=document.getElementById('dau-month-select');if(!sel)return;
+  const ym=sel.value||new Date().toISOString().slice(0,7);
+  const days=getDaysInMonth(ym);
+  const rows=days.map((d,i)=>{
+    const rec=dauData[d]||{};
+    const dau=APPS.reduce((s,a)=>s+(rec[a.code]||0),0);
+    const inflow=APPS.reduce((s,a)=>s+(rec[a.code+'_in']||0),0);
+    const retain=APPS.reduce((s,a)=>s+(rec[a.code+'_ret']||0),0);
+    const pay=APPS.reduce((s,a)=>s+(rec[a.code+'_pay']||0),0);
+    const prevRec=dauData[days[i-1]]||{};
+    const prevDau=APPS.reduce((s,a)=>s+(prevRec[a.code]||0),0);
+    const hasData=dau>0||inflow>0||retain>0||pay>0;
+    return`<tr style="${!hasData?'opacity:0.35':''}">
+      <td>${d}</td>
+      <td class="num">${dau?fmtN(dau):'—'}</td>
+      <td class="num">${inflow?fmtN(inflow):'—'}</td>
+      <td class="num">${retain?fmtN(retain):'—'}</td>
+      <td class="num">${pay?fmtN(pay):'—'}</td>
+      <td>${i>0?trend(dau,prevDau):'—'}</td>
+    </tr>`;
+  });
+  document.getElementById('dau-month-tbody').innerHTML=rows.join('');
+}
+
+// ── Yandex Month Overview ──────────────────────────
+function initYxMonthSelect(){
+  const sel=document.getElementById('yx-month-select');if(!sel)return;
+  const now=new Date();
+  const months=Array.from({length:6},(_,i)=>{
+    const d=new Date(now.getFullYear(),now.getMonth()-i,1);
+    return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0');
+  });
+  sel.innerHTML=months.map((m,i)=>`<option value="${m}"${i===0?' selected':''}>${m}</option>`).join('');
+  // init person select
+  const psel=document.getElementById('yx-person-select');if(!psel)return;
+  psel.innerHTML='<option value="">全部人员</option>'+OPERATORS.map(op=>`<option value="${op}">${op}</option>`).join('');
+}
+function renderYxMonthTable(){
+  const msel=document.getElementById('yx-month-select');if(!msel)return;
+  const psel=document.getElementById('yx-person-select');
+  const ym=msel.value||new Date().toISOString().slice(0,7);
+  const person=psel?psel.value:'';
+  const days=getDaysInMonth(ym);
+  const ops=person?[person]:OPERATORS;
+  const rows=days.map((d,i)=>{
+    const rec=yxData[d]||{};
+    const dau=ops.reduce((s,op)=>s+(rec[op+'_dau']||rec[op]||0),0);
+    const nw=ops.reduce((s,op)=>s+(rec[op+'_new']||0),0);
+    const pay=ops.reduce((s,op)=>s+(rec[op+'_pay']||0),0);
+    const prevRec=yxData[days[i-1]]||{};
+    const prevDau=ops.reduce((s,op)=>s+(prevRec[op+'_dau']||prevRec[op]||0),0);
+    const hasData=dau>0||nw>0||pay>0;
+    return`<tr style="${!hasData?'opacity:0.35':''}">
+      <td>${d}</td>
+      <td class="num">${dau?fmtN(dau):'—'}</td>
+      <td class="num">${nw?fmtN(nw):'—'}</td>
+      <td class="num">${pay?fmtN(pay):'—'}</td>
+      <td>${i>0?trend(dau,prevDau):'—'}</td>
+    </tr>`;
+  });
+  document.getElementById('yx-month-tbody').innerHTML=rows.join('');
+}
+
+// ── Entry Stats ────────────────────────────────────
+const ENTRY_COLORS=['rgba(74,222,128,0.8)','rgba(34,211,238,0.8)','rgba(251,191,36,0.8)','rgba(167,139,250,0.8)','rgba(248,113,113,0.8)','rgba(244,114,182,0.8)','rgba(99,179,237,0.8)','rgba(252,211,77,0.8)'];
+
+function initEntryPage(){
+  const sel=document.getElementById('entry-month-sel');
+  if(!sel)return;
+  const now=new Date();
+  const months=Array.from({length:12},(_,i)=>{
+    const d=new Date(now.getFullYear(),now.getMonth()-i,1);
+    return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0');
+  });
+  sel.innerHTML=months.map((m,i)=>`<option value="${m}"${i===0?' selected':''}>${m}</option>`).join('');
+  const pf=document.getElementById('entry-person-filter');
+  if(pf){
+    const ops=['潘昊','浦东','李易飞','段良军','王云赫','刘文鹏','欧阳子瑜','王云熙'];
+    pf.innerHTML='<option value="">全部人员</option>'+ops.map(o=>`<option value="${o}">${o}</option>`).join('');
+  }
+  setTimeout(renderEntryStats, 50);
+}
+
+async function syncEntryMonth(){
+  const sel=document.getElementById('entry-month-sel');
+  const ym=sel?sel.value:currentYm();
+  setSyncStatus('⏳ 同步'+ym+'...','sync-loading');
+  try{
+    const res=await gsFetch('entries',ym);
+    if(res.data&&res.data.length>0){
+      const other=entries.filter(e=>e.start&&!e.start.startsWith(ym));
+      const gsE=res.data.map((r,i)=>({
+        id:'gs_'+r.date+'_'+i,start:r.date,client:r.client,
+        type:r.type,product:r.product,rmb:r.rmb,
+        end:r.end||'',operator:r.operator,station:r.station||''
+      }));
+      entries=[...other,...gsE];
+      safeLS('set','bl_entries',JSON.stringify(entries));
+    }
+    const t=new Date();
+    setSyncStatus('✓ 已同步 '+t.getHours().toString().padStart(2,'0')+':'+t.getMinutes().toString().padStart(2,'0'),'sync-ok');
+    renderEntryStats();
+  }catch(e){setSyncStatus('✗ 同步失败','sync-err');}
+}
+
+function renderEntryStats(){
+  const sel=document.getElementById('entry-month-sel');
+  const ym=sel?sel.value:currentYm();
+  const month=entries.filter(e=>e.start&&e.start.startsWith(ym));
+
+  // 汇总指标
+  const totalRmb=month.reduce((s,e)=>s+e.rmb,0);
+  const ops=[...new Set(month.map(e=>e.operator||'未知').filter(Boolean))];
+  const set=(id,v)=>{const el=document.getElementById(id);if(el)el.textContent=v;};
+  set('es-total',totalRmb.toLocaleString('zh-CN',{minimumFractionDigits:2}));
+  set('es-count',month.length);
+  set('es-persons',ops.length);
+  set('es-avg',ops.length>0?(totalRmb/ops.length).toLocaleString('zh-CN',{minimumFractionDigits:2}):'—');
+
+  // 人员统计
+  const opStats=ops.map(op=>{
+    const opEntries=month.filter(e=>(e.operator||'未知')===op);
+    const rmb=opEntries.reduce((s,e)=>s+e.rmb,0);
+    const max=Math.max(...opEntries.map(e=>e.rmb),0);
+    return{op,rmb,count:opEntries.length,max,avg:opEntries.length>0?rmb/opEntries.length:0};
+  }).sort((a,b)=>b.rmb-a.rmb);
+
+  // 明细表
+  const tbody=document.getElementById('entry-stat-tbody');
+  if(tbody){
+    tbody.innerHTML=opStats.map((r,i)=>`<tr>
+      <td><span class="badge ${['b-green','b-blue','b-amber','b-purple','b-red','b-pink','b-blue','b-amber'][i]||'b-green'}">${r.op}</span></td>
+      <td class="num">${r.count}</td>
+      <td class="num green">${r.rmb.toLocaleString('zh-CN',{minimumFractionDigits:2})}</td>
+      <td class="num" style="color:var(--text3)">${totalRmb>0?Math.round(r.rmb/totalRmb*100):0}%</td>
+      <td class="num amber">${r.max.toLocaleString('zh-CN',{minimumFractionDigits:2})}</td>
+      <td class="num" style="color:var(--text2)">${r.avg.toLocaleString('zh-CN',{minimumFractionDigits:2})}</td>
+    </tr>`).join('')||'<tr class="empty-row"><td colspan="6">暂无数据</td></tr>';
+  }
+
+  // 更新人员筛选下拉
+  const pf=document.getElementById('entry-person-filter');
+  if(pf){
+    const cur=pf.value;
+    pf.innerHTML='<option value="">全部人员</option>'+opStats.map(r=>`<option value="${r.op}">${r.op}</option>`).join('');
+    pf.value=cur;
+  }
+
+  // 自定义柱状图（不依赖Chart.js）
+  const labels=opStats.map(r=>r.op);
+  const vals=opStats.map(r=>r.rmb);
+  const maxVal=Math.max(...vals,1);
+  const rawColors=['#4ade80','#22d3ee','#fbbf24','#a78bfa','#f87171','#f472b6','#60a5fa','#facc15'];
+  
+  const barEl=document.getElementById('entry-bar-custom');
+  if(barEl){
+    barEl.innerHTML=opStats.map((r,i)=>{
+      const h=Math.max(Math.round((r.rmb/maxVal)*170),4);
+      const pct=totalRmb>0?Math.round(r.rmb/totalRmb*100):0;
+      return `<div style="display:flex;flex-direction:column;align-items:center;flex:1;gap:4px">
+        <div style="font-size:10px;color:${rawColors[i%8]};font-family:var(--mono);text-align:center">${(r.rmb/10000).toFixed(1)}万</div>
+        <div style="width:100%;height:${h}px;background:${rawColors[i%8]};border-radius:4px 4px 0 0;opacity:0.85;cursor:pointer;transition:opacity .15s" title="${r.op}: ¥${r.rmb.toLocaleString()}" onmouseover="this.style.opacity=1" onmouseout="this.style.opacity=0.85"></div>
+        <div style="font-size:11px;color:var(--text3);text-align:center;white-space:nowrap">${r.op}</div>
+      </div>`;
+    }).join('');
+  }
+
+  const pieEl=document.getElementById('entry-pie-custom');
+  if(pieEl){
+    pieEl.innerHTML=opStats.map((r,i)=>{
+      const pct=totalRmb>0?Math.round(r.rmb/totalRmb*100):0;
+      return `<div style="display:flex;align-items:center;gap:8px">
+        <div style="width:12px;height:12px;border-radius:2px;background:${rawColors[i%8]};flex-shrink:0"></div>
+        <div style="font-size:12px;color:var(--text2);flex:1">${r.op}</div>
+        <div style="width:${Math.max(pct,2)}%;height:8px;background:${rawColors[i%8]};border-radius:4px;opacity:0.8;min-width:4px;max-width:50%"></div>
+        <div style="font-size:12px;color:var(--text3);font-family:var(--mono);white-space:nowrap">${pct}%</div>
+      </div>`;
+    }).join('');
+  }
+
+  renderEntryDetail();
+}
+
+function renderEntryDetail(){
+  const sel=document.getElementById('entry-month-sel');
+  const pf=document.getElementById('entry-person-filter');
+  const ym=sel?sel.value:currentYm();
+  const person=pf?pf.value:'';
+  let month=entries.filter(e=>e.start&&e.start.startsWith(ym));
+  if(person) month=month.filter(e=>(e.operator||'未知')===person);
+  month=month.slice().sort((a,b)=>b.start.localeCompare(a.start));
+  const tbody=document.getElementById('entry-detail-tbody');
+  if(tbody) tbody.innerHTML=month.map(e=>`<tr>
+    <td>${e.start}</td>
+    <td><strong>${e.client||'—'}</strong></td>
+    <td>${e.type?`<span class="badge b-purple">${e.type}</span>`:'—'}</td>
+    <td style="max-width:140px;overflow:hidden;text-overflow:ellipsis">${e.product||'—'}</td>
+    <td>${e.station||'—'}</td>
+    <td class="num green">${e.rmb.toLocaleString('zh-CN',{minimumFractionDigits:2})}</td>
+    <td>${e.operator||'—'}</td>
+    <td>${e.end||'—'}</td>
+  </tr>`).join('')||'<tr class="empty-row"><td colspan="8">暂无数据</td></tr>';
+}
+</script>
+</body>
+</html>
