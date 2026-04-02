@@ -378,28 +378,27 @@ tbody tr:hover td{background:rgba(255,255,255,.02)}
     <!-- 日活统计 -->
     <div class="page" id="page-dau">
       <div class="page-title">日活统计</div>
-      <div class="page-sub">APP 每日活跃用户录入，自动与前日对比</div>
+      <div class="page-sub">APP 每日活跃数据，自动从表格同步</div>
       <div class="filter-row">
-        <label>录入日期</label>
+        <label>查看日期</label>
         <input type="date" id="dau-date"/>
-        <button class="btn btn-green" onclick="saveDau()">保存当日数据</button>
-        <button class="btn btn-blue" onclick="loadDauQuery()">查询历史</button>
+        <button class="btn btn-blue" onclick="loadDauQuery()">查询</button>
+      </div>
+      <!-- 汇总指标 -->
+      <div class="metrics m4" style="margin-bottom:14px">
+        <div class="metric"><div class="metric-label">当日日活总计</div><div class="metric-val purple" id="dau-total-today">—</div></div>
+        <div class="metric"><div class="metric-label">昨日日活总计</div><div class="metric-val blue" id="dau-total-yest">—</div></div>
+        <div class="metric"><div class="metric-label">当日进量总计</div><div class="metric-val green" id="dau-total-inflow">—</div></div>
+        <div class="metric"><div class="metric-label">当日充值总计</div><div class="metric-val amber" id="dau-total-pay">—</div></div>
       </div>
       <div class="dau-grid">
         <div class="card" style="overflow:hidden">
-          <div class="card-title">APP 日活录入</div>
+          <div class="card-title">各 APP 日活明细</div>
           <div class="app-table-wrap">
             <table>
-              <thead><tr><th>编号</th><th>APP 名称</th><th>今日日活</th><th>进量</th><th>留存</th><th>充值</th><th>昨日</th><th>对比</th></tr></thead>
+              <thead><tr><th>编号</th><th>APP 名称</th><th>日活</th><th>进量</th><th>留存</th><th>充值</th><th>昨日</th><th>对比</th></tr></thead>
               <tbody id="dau-tbody"></tbody>
             </table>
-          </div>
-          <hr class="sep"/>
-          <div class="metrics m4" style="margin-bottom:0">
-            <div class="metric"><div class="metric-label">今日日活总计</div><div class="metric-val purple" id="dau-total-today">0</div></div>
-            <div class="metric"><div class="metric-label">昨日总计</div><div class="metric-val blue" id="dau-total-yest">0</div></div>
-            <div class="metric"><div class="metric-label">今日进量总计</div><div class="metric-val green" id="dau-total-inflow">0</div></div>
-            <div class="metric"><div class="metric-label">今日充值总计</div><div class="metric-val amber" id="dau-total-pay">0</div></div>
           </div>
         </div>
         <div>
@@ -408,7 +407,7 @@ tbody tr:hover td{background:rgba(255,255,255,.02)}
             <div class="bar-chart" id="dau-bar" style="height:120px"></div>
           </div>
           <div class="card">
-            <div class="card-title">今日日活排行 TOP 5</div>
+            <div class="card-title">日活排行 TOP 5</div>
             <div class="table-wrap">
               <table>
                 <thead><tr><th>排名</th><th>APP</th><th>日活</th></tr></thead>
@@ -436,28 +435,27 @@ tbody tr:hover td{background:rgba(255,255,255,.02)}
     <!-- Yandex 统计 -->
     <div class="page" id="page-yandex">
       <div class="page-title">Yandex 统计</div>
-      <div class="page-sub">运营人员每日数据录入与对比</div>
+      <div class="page-sub">运营人员每日数据，自动从表格同步</div>
       <div class="filter-row">
-        <label>录入日期</label>
+        <label>查看日期</label>
         <input type="date" id="yx-date"/>
-        <button class="btn btn-green" onclick="saveYandex()">保存当日数据</button>
-        <button class="btn btn-blue" onclick="loadYxQuery()">查询历史</button>
+        <button class="btn btn-blue" onclick="loadYxQuery()">查询</button>
+      </div>
+      <!-- 汇总指标 -->
+      <div class="metrics m4" style="margin-bottom:14px">
+        <div class="metric"><div class="metric-label">当日日活总计</div><div class="metric-val green" id="yx-total-today">—</div></div>
+        <div class="metric"><div class="metric-label">昨日日活总计</div><div class="metric-val blue" id="yx-total-yest">—</div></div>
+        <div class="metric"><div class="metric-label">当日新增总计</div><div class="metric-val purple" id="yx-total-new">—</div></div>
+        <div class="metric"><div class="metric-label">当日充值总计</div><div class="metric-val amber" id="yx-total-pay">—</div></div>
       </div>
       <div class="dau-grid">
         <div class="card">
-          <div class="card-title">运营人员数据录入</div>
+          <div class="card-title">各运营人员明细</div>
           <div class="table-wrap">
             <table>
-              <thead><tr><th>运营</th><th>今日日活</th><th>昨日</th><th>对比</th><th>今日新增</th><th>今日充值</th></tr></thead>
+              <thead><tr><th>运营</th><th>日活</th><th>昨日</th><th>对比</th><th>新增</th><th>充值</th></tr></thead>
               <tbody id="yx-tbody"></tbody>
             </table>
-          </div>
-          <hr class="sep"/>
-          <div class="metrics m4" style="margin-bottom:0">
-            <div class="metric"><div class="metric-label">今日日活总计</div><div class="metric-val green" id="yx-total-today">0</div></div>
-            <div class="metric"><div class="metric-label">昨日日活总计</div><div class="metric-val blue" id="yx-total-yest">0</div></div>
-            <div class="metric"><div class="metric-label">今日新增总计</div><div class="metric-val purple" id="yx-total-new">0</div></div>
-            <div class="metric"><div class="metric-label">今日充值总计</div><div class="metric-val amber" id="yx-total-pay">0</div></div>
           </div>
         </div>
         <div>
@@ -514,8 +512,8 @@ const APPS=[
   {code:'JHA-155',name:'老司鸡'},
   {code:'JHA-055',name:'涩漫天堂'},
   {code:'JHA-158',name:'樱花色漫'},
-  {code:'YC-151',name:'天美传媒'},
-  {code:'YC-139',name:'91AV'},
+  {code:'YC151',name:'天美传媒'},
+  {code:'YC139',name:'91AV'},
   {code:'HX-030',name:'魅影'},
   {code:'HX-044',name:'潮汐映画'},
   {code:'HX-048',name:'18禁漫'},
@@ -989,18 +987,19 @@ function renderDauTable(d){
     return`<tr>
       <td><span class="badge b-purple" style="font-size:10px">${a.code}</span></td>
       <td>${a.name}</td>
-      <td><input class="num-input" type="number" min="0" value="${c||''}" placeholder="0" id="di-${a.code}" oninput="setDauVal('${d}','${a.code}',this.value)"/></td>
-      <td><input class="num-input" type="number" min="0" value="${inflow||''}" placeholder="0" id="di-in-${a.code}" oninput="setDauVal('${d}','${a.code}_in',this.value)"/></td>
-      <td><input class="num-input" type="number" min="0" value="${retain||''}" placeholder="0" id="di-ret-${a.code}" oninput="setDauVal('${d}','${a.code}_ret',this.value)"/></td>
-      <td><input class="num-input" type="number" min="0" value="${pay||''}" placeholder="0" id="di-pay-${a.code}" oninput="setDauVal('${d}','${a.code}_pay',this.value)"/></td>
-      <td class="num">${p?fmtN(p):'—'}</td>
+      <td class="num">${c?fmtN(c):'—'}</td>
+      <td class="num green">${inflow?fmtN(inflow):'—'}</td>
+      <td class="num" style="color:var(--text2)">${retain?fmtN(retain):'—'}</td>
+      <td class="num amber">${pay?fmtN(pay):'—'}</td>
+      <td class="num" style="color:var(--text3)">${p?fmtN(p):'—'}</td>
       <td>${trend(c,p)}</td>
     </tr>`;
   }).join('');
-  document.getElementById('dau-total-today').textContent=fmtN(tC);
-  document.getElementById('dau-total-yest').textContent=fmtN(tP);
-  document.getElementById('dau-total-inflow').textContent=fmtN(tIn);
-  document.getElementById('dau-total-pay').textContent=fmtN(tPay);
+  const set=(id,v)=>{const el=document.getElementById(id);if(el)el.textContent=v>0?fmtN(v):'—';};
+  set('dau-total-today',tC);
+  set('dau-total-yest',tP);
+  set('dau-total-inflow',tIn);
+  set('dau-total-pay',tPay);
   renderDauRank(d);
 }
 function setDauVal(d,code,v){if(!dauData[d])dauData[d]={};dauData[d][code]=parseFloat(v)||0;if(d===today())loadDailyKanban();}
@@ -1038,17 +1037,18 @@ function renderYxTable(d){
     tC+=c;tP+=p;tNew+=nw;tPay+=pay;
     return`<tr>
       <td><strong>${op}</strong></td>
-      <td><input class="num-input" type="number" min="0" value="${c||''}" placeholder="0" id="yi-dau-${i}" oninput="setYxVal3(document.getElementById('yx-date').value,'${op}','dau',this.value)"/></td>
-      <td class="num">${p?fmtN(p):'—'}</td>
+      <td class="num green">${c?fmtN(c):'—'}</td>
+      <td class="num" style="color:var(--text3)">${p?fmtN(p):'—'}</td>
       <td>${trend(c,p)}</td>
-      <td><input class="num-input" type="number" min="0" value="${nw||''}" placeholder="0" id="yi-new-${i}" oninput="setYxVal3(document.getElementById('yx-date').value,'${op}','new',this.value)"/></td>
-      <td><input class="num-input" type="number" min="0" value="${pay||''}" placeholder="0" id="yi-pay-${i}" oninput="setYxVal3(document.getElementById('yx-date').value,'${op}','pay',this.value)"/></td>
+      <td class="num blue">${nw?fmtN(nw):'—'}</td>
+      <td class="num amber">${pay?fmtN(pay):'—'}</td>
     </tr>`;
   }).join('');
-  document.getElementById('yx-total-today').textContent=fmtN(tC);
-  document.getElementById('yx-total-yest').textContent=fmtN(tP);
-  document.getElementById('yx-total-new').textContent=fmtN(tNew);
-  document.getElementById('yx-total-pay').textContent=fmtN(tPay);
+  const set=(id,v)=>{const el=document.getElementById(id);if(el)el.textContent=v>0?fmtN(v):'—';};
+  set('yx-total-today',tC);
+  set('yx-total-yest',tP);
+  set('yx-total-new',tNew);
+  set('yx-total-pay',tPay);
   renderYxRank(d);
 }
 function setYxVal3(d,op,field,v){if(!d)return;if(!yxData[d])yxData[d]={};yxData[d][op+'_'+field]=parseFloat(v)||0;if(d===today())loadDailyKanban();}
@@ -1075,21 +1075,37 @@ function renderYxRank(d){
 
 // ── Daily Kanban (auto from dauData & yxData) ──────
 function loadDailyKanban(){
-  const d=today();
+  const d=prevDay(today());
+  // APP昨日日活、进量、充值
   const appDau=APPS.reduce((s,a)=>s+(dauData[d]?dauData[d][a.code]||0:0),0);
+  const appNew=APPS.reduce((s,a)=>s+(dauData[d]?dauData[d][a.code+'_in']||0:0),0);
+  const appPay=APPS.reduce((s,a)=>s+(dauData[d]?dauData[d][a.code+'_pay']||0:0),0);
+  // Yandex昨日日活、新增、充值
   const yxRec=yxData[d]||{};
   const yxDau=OPERATORS.reduce((s,op)=>s+(yxRec[op+'_dau']||yxRec[op]||0),0);
   const yxNew=OPERATORS.reduce((s,op)=>s+(yxRec[op+'_new']||0),0);
   const yxPay=OPERATORS.reduce((s,op)=>s+(yxRec[op+'_pay']||0),0);
   const dauTotal=appDau+yxDau;
+  const newTotal=appNew+yxNew;
+  const payTotal=appPay+yxPay;
   const set=(id,v)=>{const el=document.getElementById(id);if(el)el.textContent=v>0?fmtN(v):'—';};
+  const setFmt=(id,v)=>{const el=document.getElementById(id);if(el)el.textContent=v>0?fmt(v):'—';};
   set('dk-dau-total',dauTotal);
   set('dk-dau-app',appDau);
   set('dk-dau-yx',yxDau);
-  set('dk-new-total',yxNew);
+  set('dk-new-total',newTotal);
   set('dk-new-yx',yxNew);
-  set('dk-pay-total',yxPay);
+  const elNewApp=document.getElementById('dk-new-app');
+  if(elNewApp) elNewApp.textContent=appNew>0?fmtN(appNew):'—';
+  set('dk-pay-total',payTotal);
   set('dk-pay-yx',yxPay);
+  const elPayApp=document.getElementById('dk-pay-app');
+  if(elPayApp) elPayApp.textContent=appPay>0?fmtN(appPay):'—';
+  // 商务退款
+  const ym2=today().slice(0,7);
+  const refund=expenses.filter(ex=>ex.date&&ex.date.startsWith(ym2)&&ex.cat==='商务退款').reduce((s,ex)=>s+ex.amount,0);
+  const elRef=document.getElementById('dk-refund-total');
+  if(elRef) elRef.textContent=refund>0?fmt(refund):'0.00';
 }
 
 
