@@ -166,7 +166,7 @@ tbody tr:hover td{background:rgba(255,255,255,.02)}
       <!-- 当日数据自动汇总 -->
       <div class="metrics m3">
         <div class="metric">
-          <div class="metric-label">当日日活 (APP＋Yandex)</div>
+          <div class="metric-label">昨日日活 (APP＋YANDEX)</div>
           <div class="metric-val purple" id="dk-dau-total">—</div>
           <div style="display:flex;gap:12px;margin-top:6px">
             <span style="font-size:11px;color:var(--text3)">APP: <span id="dk-dau-app" style="color:var(--text2);font-family:var(--mono)">—</span></span>
@@ -174,14 +174,14 @@ tbody tr:hover td{background:rgba(255,255,255,.02)}
           </div>
         </div>
         <div class="metric">
-          <div class="metric-label">当日新增 (APP＋Yandex)</div>
+          <div class="metric-label">昨日新增 (APP＋YANDEX)</div>
           <div class="metric-val blue" id="dk-new-total">—</div>
           <div style="display:flex;gap:12px;margin-top:6px">
             <span style="font-size:11px;color:var(--text3)">Yandex新增: <span id="dk-new-yx" style="color:var(--text2);font-family:var(--mono)">—</span></span>
           </div>
         </div>
         <div class="metric">
-          <div class="metric-label">当日充值 (APP＋Yandex)</div>
+          <div class="metric-label">昨日充值 (APP＋YANDEX)</div>
           <div class="metric-val amber" id="dk-pay-total">—</div>
           <div style="display:flex;gap:12px;margin-top:6px">
             <span style="font-size:11px;color:var(--text3)">Yandex充值: <span id="dk-pay-yx" style="color:var(--text2);font-family:var(--mono)">—</span></span>
@@ -349,7 +349,7 @@ tbody tr:hover td{background:rgba(255,255,255,.02)}
         <div class="form-grid fg3">
           <div class="fg"><label>日期</label><input id="e-date" type="date"/></div>
           <div class="fg"><label>类别</label>
-            <select id="e-cat"><option value="">请选择</option><option>商务补量</option><option>运营开支</option><option>商务退款</option></select>
+            <select id="e-cat"><option value="">请选择</option><option>商务补量</option><option>运营开支</option><option>商务退款</option><option>SEO支出</option></select>
           </div>
           <div class="fg"><label>金额 RMB</label><input id="e-rmb" type="number" placeholder="0.00" min="0" step="0.01"/></div>
           <div class="fg"><label>金额 USDT</label><input id="e-usdt" type="number" placeholder="0.00" min="0" step="0.01"/></div>
@@ -357,10 +357,11 @@ tbody tr:hover td{background:rgba(255,255,255,.02)}
         </div>
         <div style="margin-top:12px"><button class="btn btn-green" onclick="addExpense()">＋ 提交开支</button></div>
       </div>
-      <div class="metrics m4">
+      <div class="metrics m5">
         <div class="metric"><div class="metric-label">商务补量</div><div class="metric-val amber" id="e-m1">0.00</div></div>
         <div class="metric"><div class="metric-label">运营开支</div><div class="metric-val red" id="e-m2">0.00</div></div>
         <div class="metric"><div class="metric-label">商务退款</div><div class="metric-val blue" id="e-m3">0.00</div></div>
+        <div class="metric"><div class="metric-label">SEO支出</div><div class="metric-val purple" id="e-m4">0.00</div></div>
         <div class="metric"><div class="metric-label">总开支 RMB</div><div class="metric-val red" id="e-total">0.00</div></div>
       </div>
       <div class="card">
@@ -530,22 +531,20 @@ const BCOLS=['b-amber','b-purple','b-blue','b-green','b-pink','b-red','b-blue','
 function normDate(s){
   if(!s) return '';
   s = String(s).trim();
-  // Already formatted: 2026-03-01
-  if(s.match(/^\d{4}-\d{2}-\d{2}$/)) return s;
-  // Try parsing as Date object string
-  const d = new Date(s);
+  // Already 2026-03-01
+  if(s.length===10 && s[4]==='-' && s[7]==='-') return s;
+  // 中文: 2026 年 3 月 1 日
+  var cn=s.match(/([0-9]{4})\s*年\s*([0-9]{1,2})\s*月\s*([0-9]{1,2})\s*日/);
+  if(cn) return cn[1]+'-'+('0'+cn[2]).slice(-2)+'-'+('0'+cn[3]).slice(-2);
+  // 英文: Mon Mar 01 2026 or Sun Mar 8 2026
+  var mo={Jan:'01',Feb:'02',Mar:'03',Apr:'04',May:'05',Jun:'06',Jul:'07',Aug:'08',Sep:'09',Oct:'10',Nov:'11',Dec:'12'};
+  var en=s.match(/[A-Za-z]{3}\s+([A-Za-z]{3})\s+([0-9]{1,2})\s+([0-9]{4})/);
+  if(en && mo[en[1]]) return en[3]+'-'+mo[en[1]]+'-'+('0'+en[2]).slice(-2);
+  // fallback Date parse with UTC+8
+  var d=new Date(s);
   if(!isNaN(d.getTime())){
-    return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
-  }
-  // 2026/3/1 or 3/1
-  if(s.match(/^\d{4}\/\d{1,2}\/\d{1,2}$/)){
-    const p=s.split('/');
-    return p[0]+'-'+p[1].padStart(2,'0')+'-'+p[2].padStart(2,'0');
-  }
-  if(s.match(/^\d{1,2}\/\d{1,2}$/)){
-    const p=s.split('/');
-    const y=new Date().getFullYear();
-    return y+'-'+p[0].padStart(2,'0')+'-'+p[1].padStart(2,'0');
+    var u=new Date(d.getTime()+28800000);
+    return u.getUTCFullYear()+'-'+('0'+(u.getUTCMonth()+1)).slice(-2)+'-'+('0'+u.getUTCDate()).slice(-2);
   }
   return s;
 }
@@ -965,7 +964,7 @@ function addExpense(){
 }
 function delExpense(id){if(!confirm('确认删除？'))return;expenses=expenses.filter(e=>e.id!==id);save();renderExpenses();}
 function renderExpenses(){
-  const cats=['商务补量','运营开支','商务退款'],mids=['e-m1','e-m2','e-m3'],bmap={'商务补量':'b-amber','运营开支':'b-red','商务退款':'b-blue'};
+  const cats=['商务补量','运营开支','商务退款','SEO支出'],mids=['e-m1','e-m2','e-m3','e-m4'],bmap={'商务补量':'b-amber','运营开支':'b-red','商务退款':'b-blue','SEO支出':'b-purple'};
   let total=0;cats.forEach((c,i)=>{const s=expenses.filter(e=>e.cat===c).reduce((sum,e)=>sum+e.amount,0);document.getElementById(mids[i]).textContent=fmt(s);total+=s;});
   document.getElementById('e-total').textContent=fmt(total);
   document.getElementById('expense-tbody').innerHTML=expenses.slice().reverse().map(e=>`<tr>
@@ -1160,7 +1159,7 @@ function renderKanbanCharts(){
   }
 
   // 4. 柱状图：本月开支
-  const ecats=['商务补量','运营开支','商务退款'];
+  const ecats=['商务补量','运营开支','商务退款','SEO支出'];
   const evals=ecats.map(c=>expenses.filter(e=>e.date&&e.date.startsWith(ym)&&e.cat===c).reduce((s,e)=>s+e.amount,0));
   destroyChart('bar');
   const elB=document.getElementById('chart-bar');
@@ -1329,6 +1328,8 @@ loadDailyKanban();
 
 // 页面加载后自动同步一次
 setTimeout(syncAll, 800);
+// 每5分钟自动同步一次
+setInterval(syncAll, 5 * 60 * 1000);
 
 // ── DAU Month Overview ─────────────────────────────
 function getDaysInMonth(ym){
