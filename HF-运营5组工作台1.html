@@ -453,7 +453,7 @@ tbody tr:hover td{background:rgba(255,255,255,.02)}
           <div class="card-title">各运营人员明细</div>
           <div class="table-wrap">
             <table>
-              <thead><tr><th>运营</th><th>日活</th><th>昨日</th><th>对比</th><th>新增</th><th>充值</th></tr></thead>
+              <thead><tr><th>运营</th><th>日活</th><th>昨日</th><th>对比</th><th>涨跌%</th><th>充值</th></tr></thead>
               <tbody id="yx-tbody"></tbody>
             </table>
           </div>
@@ -524,7 +524,7 @@ const APPS=[
   {code:'JHG-055',name:'恒香-瓜瓜社'},
   {code:'DX-098',name:'悦达-懂色帝'},
 ];
-const OPERATORS=['潘昊','浦东','李易飞','段良军','王云赫','刘文鹏','欧阳子瑜','王云熙'];
+const OPERATORS=['潘昊','浦洺','浦东','李易飞','段良军','王云赫','刘文鹏','欧阳子瑜','王云熙'];
 const BCOLS=['b-amber','b-purple','b-blue','b-green','b-pink','b-red','b-blue','b-green'];
 function normDate(s){
   if(!s) return '';
@@ -1040,7 +1040,7 @@ function renderYxTable(d){
       <td class="num green">${c?fmtN(c):'—'}</td>
       <td class="num" style="color:var(--text3)">${p?fmtN(p):'—'}</td>
       <td>${trend(c,p)}</td>
-      <td class="num blue">${nw?fmtN(nw):'—'}</td>
+      <td class="num">${p>0?(()=>{const pct=Math.round((c-p)/p*100);return pct>0?`<span class="trend-up">▲ ${pct}%</span>`:pct<0?`<span class="trend-down">▼ ${Math.abs(pct)}%</span>`:'<span class="trend-flat">0%</span>';})():'—'}</td>
       <td class="num amber">${pay?fmtN(pay):'—'}</td>
     </tr>`;
   }).join('');
@@ -1444,7 +1444,7 @@ function initEntryPage(){
   sel.innerHTML=months.map((m,i)=>`<option value="${m}"${i===0?' selected':''}>${m}</option>`).join('');
   const pf=document.getElementById('entry-person-filter');
   if(pf){
-    const ops=['潘昊','浦东','李易飞','段良军','王云赫','刘文鹏','欧阳子瑜','王云熙'];
+    const ops=['潘昊','浦洺','浦东','李易飞','段良军','王云赫','刘文鹏','欧阳子瑜','王云熙'];
     pf.innerHTML='<option value="">全部人员</option>'+ops.map(o=>`<option value="${o}">${o}</option>`).join('');
   }
   setTimeout(renderEntryStats, 50);
