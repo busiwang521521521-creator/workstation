@@ -594,7 +594,7 @@ tbody tr:hover td{background:rgba(255,255,255,.02)}
           <button class="btn btn-sm" style="background:rgba(255,255,255,.05);border:1px solid var(--border2);color:var(--text2)" onclick="shiftScoreMonth(1)">下月 ▶</button>
         </div>
       </div>
-      <div class="page-sub" style="margin-bottom:20px">月收款自动同步自「每日录入」，Yandex总数据自动同步自「Yandex 统计」，百度总数据自动同步自「百度统计」；净利润 = 月收款 − 月退款；商务目标／做量目标取上月实际完成数据；净利润每 ¥10,000 计 1 分，Yandex 总数据每 10,000 计 1 分，百度总数据每 10,000 计 1 分，总分数 = 三者之和</div>
+      <div class="page-sub" style="margin-bottom:20px">月收款自动同步自「每日录入」，Yandex总数据自动同步自「Yandex 统计」，百度总数据自动同步自「百度统计」；净利润 = 月收款 − 月退款；商务目标／做量目标取上月实际完成数据；净利润每 ¥10,000 计 1 分，Yandex 总数据每 10,000 计 0.6 分，百度总数据每 10,000 计 0.6 分，总分数 = 三者之和</div>
 
       <div class="card">
         <div class="card-title">组员积分明细</div>
@@ -1759,7 +1759,7 @@ function renderScorePage(){
     const bizRate=hasBizTarget?(netProfit/bizTarget*100):0;
     const liangRate=hasLiangTarget?(cur.yx/liangTarget*100):0;
     const baiduRate=hasBaiduTarget?(cur.baidu/baiduTarget*100):0;
-    const scoreVal=(netProfit/10000)+(cur.yx/10000)+(cur.baidu/10000);
+    const scoreVal=(netProfit/10000)+(cur.yx/10000*0.6)+(cur.baidu/10000*0.6);
     return `<tr>
       <td><strong>${name}</strong></td>
       <td class="num green" title="自动同步自「每日录入」，无需手动填写">¥${fmtN(cur.rmb)}</td>
